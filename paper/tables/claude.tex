@@ -5,14 +5,14 @@
 \cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
 Detector & Clean & Att. & $\Delta$ & Clean & Att. & $\Delta$ & Clean & Att. & $\Delta$ \\
 \midrule
-Claude Opus 5.5 zero-shot & 85.8 & 68.9 & $-16.9$ & 70.5 & 55.2 & $-15.4$ & 49.5 & 59.8 & $+10.3$ \\
-Llama-3.1-8B zero-shot & 81.1 & 48.0$^{*}$ & $-33.1$ & 69.9 & 43.7$^{*}$ & $-26.2$ & 57.5 & 38.8$^{*}$ & $-18.7$ \\
-Claim retrieval + LLM & 74.1$^{*}$ & 62.3 & $-11.7$ & 74.0 & 48.9 & $-25.1$ & 68.0$^{*}$ & 64.4 & $-3.6$ \\
-XLM-R, adv.\ training (B) & 79.4 & 71.1 & $-8.4$ & 67.8 & 69.3$^{*}$ & $+1.5$ & 75.5$^{*}$ & 71.0$^{*}$ & $-4.5$ \\
-\method{} (A) & 87.1 & 76.7 & $-10.4$ & 77.7 & 68.6$^{*}$ & $-9.0$ & 78.3$^{*}$ & 73.1$^{*}$ & $-5.2$ \\
-\method{} + \air{} + aug.\ (B) & 79.2 & 72.7 & $-6.5$ & 72.4 & 64.2 & $-8.2$ & 76.7$^{*}$ & 74.6$^{*}$ & $-2.1$ \\
+Claude Opus 5.5 zero-shot \citep{anthropic2026opus55} & 85.8 & 68.9 & $-16.9$ & 70.5 & 55.2 & $-15.4$ & 49.5 & 59.8 & $+10.3$ \\
+Llama-3.1-8B zero-shot \citep{grattafiori2024llama3} & 81.1 & 48.0$^{*}$ & $-33.1$ & 69.9 & 43.7$^{*}$ & $-26.2$ & 57.5 & 38.8$^{*}$ & $-18.7$ \\
+Claim retrieval + LLM \citep{pikuliak2023multiclaim} & 74.1$^{*}$ & 62.3 & $-11.7$ & 74.0 & 48.9 & $-25.1$ & 68.0$^{*}$ & 64.4 & $-3.6$ \\
+XLM-R, adv.\ training \citep{conneau2020xlmr} (B) & 79.4 & 71.1 & $-8.4$ & 67.8 & 69.3$^{*}$ & $+1.5$ & 75.5$^{*}$ & 71.0$^{*}$ & $-4.5$ \\
+\method{} (ours, A) & 87.1 & 76.7 & $-10.4$ & 77.7 & 68.6$^{*}$ & $-9.0$ & 78.3$^{*}$ & 73.1$^{*}$ & $-5.2$ \\
+\method{} + \air{} + aug.\ (ours, B) & 79.2 & 72.7 & $-6.5$ & 72.4 & 64.2 & $-8.2$ & 76.7$^{*}$ & 74.6$^{*}$ & $-2.1$ \\
 \bottomrule
 \end{tabular}\end{adjustbox}
-\caption{Claude Opus 5.5 compared with selected detectors on the same stratified subsample of 100 test claims per dataset, clean and under the fifteen attacks (macro-F1, \%). Claude was run on this subsample only, for cost reasons, so all detectors here are rescored on the same 100 claims; their numbers therefore differ slightly from Table~\ref{tab:main}, which uses the full test sets. $^{*}$: significantly different from Claude (paired bootstrap, $p<0.05$). Answers that are neither yes nor no (1 of 4800) count as not flagged.}
+\caption{Claude Opus 5.5 compared with selected detectors on the same stratified subsample of 100 test claims per dataset, clean and under the fifteen attacks (macro-F1, \%). Claude was run on this subsample only, for cost reasons, so all detectors here are rescored on the same 100 claims; their numbers therefore differ slightly from Table~\ref{tab:main}, which uses the full test sets. $^{*}$: significantly different from Claude (paired bootstrap, $p<0.05$). Answers that are neither yes nor no (1 of 4800) count as not flagged. \method{} + \air{} + aug.: the Setting~B variant of \method{}, with the attack-invariant retriever (\air{}) and a verifier also trained on the transformed (augmented) training claims.}
 \label{tab:claude}
 \end{table*}

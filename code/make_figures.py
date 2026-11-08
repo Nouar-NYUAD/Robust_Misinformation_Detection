@@ -28,9 +28,9 @@ f1 = lambda d, m, k: 100 * float(S[d, m][k])
 
 ROWS = [("kotonya", "SciBERT + evidence", "A"), ("arg", "ARG", "A"), ("programfc", "ProgramFC", "A"),
         ("minicheck", "MiniCheck", "A"), ("rag", "Claim retrieval + LLM", "A"), ("zs", "Llama-3.1-8B zero-shot", "A"),
-        ("zs_qwen", "Qwen2.5-7B zero-shot", "A"), ("clf_xlmr", "XLM-R", "A"), ("ours_vtrained", "UNWRAP", "A"),
+        ("zs_qwen", "Qwen2.5-7B zero-shot", "A"), ("clf_xlmr", "XLM-R", "A"), ("ours_vtrained", "UNWRAP (ours)", "A"),
         ("kotonya-advtrain", "SciBERT + evidence", "B"), ("arg-advtrain", "ARG", "B"),
-        ("clf_xlmr-advtrain", "XLM-R", "B"), ("ours_air_vtrained_aug", "UNWRAP + AIR + aug.", "B")]
+        ("clf_xlmr-advtrain", "XLM-R", "B"), ("ours_air_vtrained_aug", "UNWRAP + AIR + aug. (ours)", "B")]
 OURS = {"ours_vtrained", "ours_air_vtrained_aug"}
 
 
@@ -94,11 +94,11 @@ def dumbbell():
 def per_attack():
     # same-setting comparison: every solid line is trained on the same transformed claims (Setting B); UNWRAP
     # trained on clean claims only (Setting A) is a thin dashed reference in the same hue
-    series = [("ours_air_vtrained_aug", "UNWRAP (B)", BLUE, "o", "-"),
+    series = [("ours_air_vtrained_aug", "UNWRAP + AIR + aug. (ours, B)", BLUE, "o", "-"),
               ("clf_xlmr-advtrain", "XLM-R adv. (B)", YELLOW, "D", "-"),
               ("arg-advtrain", "ARG adv. (B)", AQUA, "^", "-"),
               ("kotonya-advtrain", "SciBERT+ev. adv. (B)", ORANGE, "s", "-"),
-              ("ours_vtrained", "UNWRAP, no attacks (A)", BLUE, "", (0, (3, 2)))]
+              ("ours_vtrained", "UNWRAP (ours, A)", BLUE, "", (0, (3, 2)))]
     groups = [("Clean", ["CLEAN"]), ("Seen in Setting B", SEEN), ("Unseen single", UNSEEN_SINGLE),
               ("Chained (unseen)", UNSEEN_CHAIN)]
     short = lambda a: {"CLEAN": "clean"}.get(a, display(a).replace("TR_", "").replace(">", "→"))
@@ -124,26 +124,18 @@ def per_attack():
             ax.plot([xs[a] + dx for a in atts], [mean(m, a) for a in atts], color=col, lw=1.4 if ls == "-" else 1.0,
                     ls=ls, marker=mk or ("." if atts == ["CLEAN"] else None), ms=4.2, mec=SURF, mew=0.6,
                     zorder=3 if ls == "-" else 2)
-    # direct labels at the right end, spread apart so they never overlap (min gap 4.5 F1 points)
-    last = UNSEEN_CHAIN[-1]
-    ends = sorted(((mean(m, last), name, m) for m, name, _, _, _ in series), reverse=True)
-    ys = []
-    for v, _, _ in ends:
-        ys.append(min(v, ys[-1] - 4.5) if ys else v)
-    for (v, name, _), yl in zip(ends, ys):
-        ax.annotate(name, (xs[last], v), xytext=(xs[last] + 0.7, yl), textcoords="data", va="center", fontsize=7,
-                    color=INK, arrowprops=dict(arrowstyle="-", color=INK2, lw=0.4, shrinkA=0, shrinkB=3))
+    # identity: legend (two rows, so the long names fit) + a distinct marker shape per series; no end labels
     handles = [plt.Line2D([], [], color=col, lw=1.4 if ls == "-" else 1.0, ls=ls, marker=mk or None, ms=4.2, mec=SURF,
                           mew=0.6, label=name) for _, name, col, mk, ls in series]
-    fig.legend(handles=handles, loc="upper center", ncol=len(series), frameon=False, fontsize=7,
-               bbox_to_anchor=(0.5, 1.0), handlelength=2.2, columnspacing=1.2)
+    fig.legend(handles=handles, loc="upper center", ncol=3, frameon=False, fontsize=7,
+               bbox_to_anchor=(0.55, 1.0), handlelength=2.2, columnspacing=1.4)
     ax.set_xticks(list(xs.values()))
     ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=7)
-    ax.set_xlim(-0.6, max(xs.values()) + 4.2)
+    ax.set_xlim(-0.6, max(xs.values()) + 0.6)
     ax.set_ylim(30, 85)
     ax.set_ylabel("Macro-F1 (%), mean of 3 datasets")
     ax.spines["left"].set_visible(True)
-    fig.tight_layout(rect=(0, 0, 1, 0.9))  # leave the top row for the legend, above the group titles
+    fig.tight_layout(rect=(0, 0, 1, 0.84))  # leave two rows for the legend, above the group titles
     fig.savefig(OUT / "fig_per_attack.pdf", bbox_inches="tight")
     fig.savefig(OUT / "fig_per_attack.png", dpi=200, bbox_inches="tight")
     plt.close(fig)

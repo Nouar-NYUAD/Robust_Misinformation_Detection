@@ -90,9 +90,9 @@ CMP_B = comp_index(load("compare_settingB"))
 CMP_ABL = comp_index(load("compare_ablations"))
 
 
-def table_star(lines_body, ncols_per_ds, header_cells, caption, label, colspec=None):
+def table_star(lines_body, ncols_per_ds, header_cells, caption, label, colspec=None, sep=5):
     colspec = colspec or ("l" + "c" * ncols_per_ds * 3)
-    lines = ["\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{5pt}", f"\\begin{{tabular}}{{{colspec}}}",
+    lines = [f"\\begin{{table*}}[t]\\centering\\small\\setlength{{\\tabcolsep}}{{{sep}pt}}", f"\\begin{{tabular}}{{{colspec}}}",
              "\\toprule",
              " & " + " & ".join(f"\\multicolumn{{{ncols_per_ds}}}{{c}}{{{DSN[d]}}}" for d in DATASETS) + " \\\\",
              " ".join(f"\\cmidrule(lr){{{2 + ncols_per_ds * i}-{1 + ncols_per_ds * (i + 1)}}}" for i in range(3)),
@@ -143,7 +143,7 @@ def main_table():
            "three seeds, except \\method{} + \\air{} + aug.\\ (one seed). Best per setting in bold. "
            "$^{\\dagger}$/$^{\\ddagger}$: significantly worse/better than the fine-tuned \\method{} of the same "
            "setting (paired bootstrap, $p<0.05$).")
-    return table_star(body, 3, "Detector & " + " & ".join(["Clean & Att. & $\\Delta$"] * 3), cap, "tab:main")
+    return table_star(body, 3, "Detector & " + " & ".join(["Clean & Att. & $\\Delta$"] * 3), cap, "tab:main", sep=3.5)
 
 
 # ---------------------------------------------------------------- ablations (seed 0 throughout)
@@ -156,7 +156,7 @@ def ablation_table():
             full[d, k] = vals[0]
         assert all(S[d, m]["seeds"] == "1" for m, _, _ in ABL)
     nums["ablation_full_s0"] = {f"{d}/{k}": v for (d, k), v in full.items()}
-    body = ["Full \\method{} & " + " & ".join(f"{pc(full[d, k])}" for d in DATASETS
+    body = ["Full \\method{} (ours) & " + " & ".join(f"{pc(full[d, k])}" for d in DATASETS
                                                for k in ("clean_f1", "attacked_f1")) + " \\\\"]
     for i, (m, name, grp) in enumerate(ABL):
         if i == 0 or ABL[i - 1][2] != grp:
@@ -189,7 +189,7 @@ def plugin_table():
                       pc(S[d, a]["attacked_f1"]), pc(S[d, b]["attacked_f1"]) + ("$^{*}$" if sig(c["attacked_p"]) else "")]
             nums[f"plugin/{d}/{a}"] = {k: c[k] for k in ("clean_diff", "clean_p", "attacked_diff", "attacked_p")}
         body.append(name + " & " + " & ".join(cells) + " \\\\")
-    lines = ["\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{4pt}",
+    lines = ["\\begin{table*}[t]\\centering\\small\\setlength{\\tabcolsep}{2.8pt}",
              "\\begin{tabular}{l" + "cccc" * 3 + "}", "\\toprule",
              " & " + " & ".join(f"\\multicolumn{{4}}{{c}}{{{DSN[d]}}}" for d in DATASETS) + " \\\\",
              " ".join(f"\\cmidrule(lr){{{2 + 4 * i}-{5 + 4 * i}}}" for i in range(3)),
@@ -281,7 +281,7 @@ def contamination_table():
              "\\bottomrule", "\\end{tabular}",
              "\\caption{Guided instruction test for test-set contamination \\citep{golchin2024timetravel}: the model "
              "completes the first piece of a test claim once with an instruction naming the dataset and split (guided) "
-             "and once without (general). ROUGE-L is computed on the generated second piece; $p$ tests guided $>$ "
+             "and once without (general). ROUGE-L \\citep{lin2004rouge} is computed on the generated second piece; $p$ tests guided $>$ "
              "general (10,000 bootstrap resamples); near-exact means ROUGE-L $\\geq 0.75$. $^{a}$For Llama, in the "
              "instruction format, which it refused almost entirely, so its test uses a pre-filled answer; some of its "
              "guided completions were then empty (scored 0), and the test without them is also given. Claude usually "
@@ -394,12 +394,53 @@ def fit_width(tex):
                .replace("\\end{tabular}", "\\end{tabular}\\end{adjustbox}"))
 
 
+OURS_ALL = {OURS_FREE, OURS_A, OURS_B}
+CITE = {"kotonya": "kotonya2020pubhealth", "arg": "hu2024arg", "programfc": "pan2023programfc",
+        "minicheck": "tang2024minicheck", "rag": "pikuliak2023multiclaim", "zs": "grattafiori2024llama3",
+        "zs_qwen": "qwen2024qwen25", "clf_xlmr": "conneau2020xlmr", "zs_claude": "anthropic2026opus55"}
+
+
+def label(m, name):
+    """table row name: our methods carry '(ours)', every other method its reference"""
+    import re
+    if m in OURS_ALL:
+        if "(ours" in name:
+            return name
+        t = re.search(r"\s*\((A|B)\)$", name)
+        return (name[:t.start()] + f" (ours, {t.group(1)})") if t else name + " (ours)"
+    key = m.replace("-advtrain", "")
+    assert key in CITE, f"no reference for method {m}"
+    if "\\cite" in name:
+        return name
+    t = re.search(r"\s*\((A|B)\)$", name)
+    cite = f" \\citep{{{CITE[key]}}}"
+    return (name[:t.start()] + cite + t.group(0)) if t else name + cite
+
+
+def apply_labels():
+    global SETTING_A_GROUPS, SETTING_A, SETTING_B, PLUG, SU_ROWS, ADAPT_ROWS, CLAUDE_ROWS, SHORT
+    SETTING_A_GROUPS = [(g, [(m, label(m, n)) for m, n in rows]) for g, rows in SETTING_A_GROUPS]
+    SETTING_A = [r for _, rows in SETTING_A_GROUPS for r in rows]
+    SETTING_B = [(m, label(m, n)) for m, n in SETTING_B]
+    PLUG = [(a, b, label(a, n)) for a, b, n in PLUG]
+    SU_ROWS = [(m, label(m, n), s) for m, n, s in SU_ROWS]
+    ADAPT_ROWS = [(m, label(m, n)) for m, n in ADAPT_ROWS]
+    CLAUDE_ROWS = [(m, label(m, n)) for m, n in CLAUDE_ROWS]
+    SHORT = {m: label(m, n) for m, n in SHORT.items()}
+
+
 def main():
+    apply_labels()
     OUT.mkdir(parents=True, exist_ok=True)
     out = {"main": main_table(), "ablation": ablation_table(), "plugin": plugin_table(),
            "seen_unseen": seen_unseen_table(), "adaptive": adaptive_table(), "contamination": contamination_table(),
            "preservation": preservation_table(), "claude": claude_table(), **{f"per_attack_{d}": per_attack_table(d) for d in DATASETS}}
+    note = (" \\method{} + \\air{} + aug.: the Setting~B variant of \\method{}, with the attack-invariant retriever "
+            "(\\air{}) and a verifier also trained on the transformed (augmented) training claims.")
     for name, tex in out.items():
+        if "\\air{} + aug." in tex and note not in tex:  # define the variant wherever it appears
+            assert tex.count("}\n\\label{") == 1, name
+            tex = tex.replace("}\n\\label{", note + "}\n\\label{")
         tex = fit_width(tex.replace("\\color{newtext}", ""))
         (OUT / f"{name}.tex").write_text(tex + "\n", encoding="utf-8")
     for (d, m), r in S.items():

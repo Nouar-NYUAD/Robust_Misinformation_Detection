@@ -56,6 +56,8 @@ if __name__ == "__main__":
     bad = 0
     for p in sorted((ROOT / "paper/tables").glob("*.tex")):
         tex = p.read_text(encoding="utf-8")
+        if "\\begin{tabular}" not in tex or "p{0." in tex:  # no table (prompts) or wrapping text columns (examples)
+            continue
         avail = TEXT if "\\begin{table*}" in tex else COL
         w, size = table_width(tex)
         scale = min(1.0, avail / w)

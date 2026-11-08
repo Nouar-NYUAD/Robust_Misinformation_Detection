@@ -4,42 +4,42 @@
 \multicolumn{11}{l}{\emph{Clean and single attacks}} \\
 Detector & Clean & fr & es & ar & hi & zh & SUM & MCQ & XML & JSON \\
 \midrule
-ProgramFC & 54.7 & 43.4 & 45.1 & 47.4 & 40.5 & 37.2 & 27.6 & 53.1 & 44.5 & 43.0 \\
-MiniCheck & 67.7 & 45.2 & 44.5 & 43.8 & 43.7 & 43.4 & 44.7 & 48.0 & 45.3 & 46.6 \\
-Claim retrieval + LLM & 72.7 & 47.6 & 45.8 & 45.8 & 47.4 & 45.4 & 44.5 & 56.2 & 50.4 & 51.9 \\
-Llama-3.1-8B zero-shot & 73.5 & 43.8 & 43.9 & 43.9 & 43.6 & 43.6 & 44.7 & 38.6 & 43.5 & 43.2 \\
-Qwen2.5-7B zero-shot & 42.2 & 52.4 & 57.5 & 52.0 & 58.9 & 62.7 & 27.5 & 30.0 & 55.4 & 66.7 \\
-\method{}, no training & 69.4 & 66.9 & 64.9 & 65.3 & 64.4 & 69.1 & 55.1 & 66.7 & 66.1 & 62.9 \\
-SciBERT + evidence & 69.1 & 42.5 & 39.6 & 20.7 & 39.3 & 33.0 & 52.0 & 54.2 & 51.8 & 48.7 \\
-ARG & 49.3 & 18.1 & 17.9 & 17.9 & 18.3 & 18.5 & 51.0 & 53.3 & 39.8 & 41.5 \\
-XLM-R & 53.5 & 44.8 & 44.5 & 39.0 & 43.6 & 45.2 & 44.7 & 46.8 & 43.3 & 43.1 \\
-\method{} & 77.0 & 72.2 & 68.7 & 74.5 & 72.8 & 76.0 & 58.9 & 76.6 & 70.3 & 72.1 \\
+ProgramFC \citep{pan2023programfc} & 54.7 & 43.4 & 45.1 & 47.4 & 40.5 & 37.2 & 27.6 & 53.1 & 44.5 & 43.0 \\
+MiniCheck \citep{tang2024minicheck} & 67.7 & 45.2 & 44.5 & 43.8 & 43.7 & 43.4 & 44.7 & 48.0 & 45.3 & 46.6 \\
+Claim retrieval + LLM \citep{pikuliak2023multiclaim} & 72.7 & 47.6 & 45.8 & 45.8 & 47.4 & 45.4 & 44.5 & 56.2 & 50.4 & 51.9 \\
+Llama-3.1-8B zero-shot \citep{grattafiori2024llama3} & 73.5 & 43.8 & 43.9 & 43.9 & 43.6 & 43.6 & 44.7 & 38.6 & 43.5 & 43.2 \\
+Qwen2.5-7B zero-shot \citep{qwen2024qwen25} & 42.2 & 52.4 & 57.5 & 52.0 & 58.9 & 62.7 & 27.5 & 30.0 & 55.4 & 66.7 \\
+\method{}, no training (ours) & 69.4 & 66.9 & 64.9 & 65.3 & 64.4 & 69.1 & 55.1 & 66.7 & 66.1 & 62.9 \\
+SciBERT + evidence \citep{kotonya2020pubhealth} & 69.1 & 42.5 & 39.6 & 20.7 & 39.3 & 33.0 & 52.0 & 54.2 & 51.8 & 48.7 \\
+ARG \citep{hu2024arg} & 49.3 & 18.1 & 17.9 & 17.9 & 18.3 & 18.5 & 51.0 & 53.3 & 39.8 & 41.5 \\
+XLM-R \citep{conneau2020xlmr} & 53.5 & 44.8 & 44.5 & 39.0 & 43.6 & 45.2 & 44.7 & 46.8 & 43.3 & 43.1 \\
+\method{} (ours) & 77.0 & 72.2 & 68.7 & 74.5 & 72.8 & 76.0 & 58.9 & 76.6 & 70.3 & 72.1 \\
 \cmidrule(lr){1-11}
-SciBERT + evidence, adv. & 73.6 & 62.8 & 59.9 & 48.5 & 44.2 & 40.8 & 59.0 & 69.1 & 63.8 & 60.3 \\
-ARG, adv. & 73.6 & 69.9 & 67.5 & 54.9 & 46.6 & 47.4 & 66.8 & 67.0 & 69.6 & 74.6 \\
-XLM-R, adv. & 72.0 & 76.0 & 73.0 & 71.6 & 69.7 & 76.4 & 71.0 & 71.4 & 73.6 & 71.7 \\
-\method{} + \air{} + aug. & 77.1 & 71.2 & 67.5 & 73.1 & 71.9 & 68.0 & 60.1 & 74.5 & 71.4 & 72.1 \\
+SciBERT + evidence, adv. \citep{kotonya2020pubhealth} & 73.6 & 62.8 & 59.9 & 48.5 & 44.2 & 40.8 & 59.0 & 69.1 & 63.8 & 60.3 \\
+ARG, adv. \citep{hu2024arg} & 73.6 & 69.9 & 67.5 & 54.9 & 46.6 & 47.4 & 66.8 & 67.0 & 69.6 & 74.6 \\
+XLM-R, adv. \citep{conneau2020xlmr} & 72.0 & 76.0 & 73.0 & 71.6 & 69.7 & 76.4 & 71.0 & 71.4 & 73.6 & 71.7 \\
+\method{} + \air{} + aug. (ours) & 77.1 & 71.2 & 67.5 & 73.1 & 71.9 & 68.0 & 60.1 & 74.5 & 71.4 & 72.1 \\
 \midrule
 \multicolumn{11}{l}{\emph{Chained attacks}} \\
 Detector & C1 & C2 & C3 & C4 & C5 & C6 &  &  &  &  \\
 \midrule
-ProgramFC & 55.1 & 48.7 & 44.0 & 22.1 & 29.7 & 37.5 &  &  &  &  \\
-MiniCheck & 49.6 & 56.2 & 48.6 & 43.9 & 44.7 & 45.0 &  &  &  &  \\
-Claim retrieval + LLM & 61.6 & 47.3 & 46.6 & 45.8 & 47.0 & 48.9 &  &  &  &  \\
-Llama-3.1-8B zero-shot & 43.0 & 42.0 & 42.5 & 43.9 & 44.7 & 42.0 &  &  &  &  \\
-Qwen2.5-7B zero-shot & 42.6 & 34.9 & 48.6 & 53.5 & 63.3 & 24.5 &  &  &  &  \\
-\method{}, no training & 64.3 & 65.9 & 62.1 & 65.5 & 59.3 & 62.5 &  &  &  &  \\
-SciBERT + evidence & 42.7 & 51.1 & 53.5 & 39.2 & 53.5 & 43.0 &  &  &  &  \\
-ARG & 21.5 & 28.0 & 29.2 & 17.9 & 38.0 & 21.4 &  &  &  &  \\
-XLM-R & 46.9 & 42.2 & 42.3 & 45.9 & 44.7 & 45.9 &  &  &  &  \\
-\method{} & 72.4 & 77.4 & 72.1 & 70.4 & 63.2 & 73.0 &  &  &  &  \\
+ProgramFC \citep{pan2023programfc} & 55.1 & 48.7 & 44.0 & 22.1 & 29.7 & 37.5 &  &  &  &  \\
+MiniCheck \citep{tang2024minicheck} & 49.6 & 56.2 & 48.6 & 43.9 & 44.7 & 45.0 &  &  &  &  \\
+Claim retrieval + LLM \citep{pikuliak2023multiclaim} & 61.6 & 47.3 & 46.6 & 45.8 & 47.0 & 48.9 &  &  &  &  \\
+Llama-3.1-8B zero-shot \citep{grattafiori2024llama3} & 43.0 & 42.0 & 42.5 & 43.9 & 44.7 & 42.0 &  &  &  &  \\
+Qwen2.5-7B zero-shot \citep{qwen2024qwen25} & 42.6 & 34.9 & 48.6 & 53.5 & 63.3 & 24.5 &  &  &  &  \\
+\method{}, no training (ours) & 64.3 & 65.9 & 62.1 & 65.5 & 59.3 & 62.5 &  &  &  &  \\
+SciBERT + evidence \citep{kotonya2020pubhealth} & 42.7 & 51.1 & 53.5 & 39.2 & 53.5 & 43.0 &  &  &  &  \\
+ARG \citep{hu2024arg} & 21.5 & 28.0 & 29.2 & 17.9 & 38.0 & 21.4 &  &  &  &  \\
+XLM-R \citep{conneau2020xlmr} & 46.9 & 42.2 & 42.3 & 45.9 & 44.7 & 45.9 &  &  &  &  \\
+\method{} (ours) & 72.4 & 77.4 & 72.1 & 70.4 & 63.2 & 73.0 &  &  &  &  \\
 \cmidrule(lr){1-11}
-SciBERT + evidence, adv. & 58.3 & 58.1 & 65.1 & 50.5 & 53.5 & 45.7 &  &  &  &  \\
-ARG, adv. & 55.9 & 67.3 & 64.7 & 47.8 & 64.0 & 56.2 &  &  &  &  \\
-XLM-R, adv. & 73.0 & 72.6 & 72.5 & 72.7 & 67.0 & 72.6 &  &  &  &  \\
-\method{} + \air{} + aug. & 71.6 & 72.4 & 72.6 & 65.9 & 58.9 & 69.8 &  &  &  &  \\
+SciBERT + evidence, adv. \citep{kotonya2020pubhealth} & 58.3 & 58.1 & 65.1 & 50.5 & 53.5 & 45.7 &  &  &  &  \\
+ARG, adv. \citep{hu2024arg} & 55.9 & 67.3 & 64.7 & 47.8 & 64.0 & 56.2 &  &  &  &  \\
+XLM-R, adv. \citep{conneau2020xlmr} & 73.0 & 72.6 & 72.5 & 72.7 & 67.0 & 72.6 &  &  &  &  \\
+\method{} + \air{} + aug. (ours) & 71.6 & 72.4 & 72.6 & 65.9 & 58.9 & 69.8 &  &  &  &  \\
 \bottomrule
 \end{tabular}\end{adjustbox}
-\caption{Macro-F1 (\%) per attack on CLIMATE-FEVER. Chained attacks: C1 = MCQ$\to$TR, C2 = MCQ$\to$JSON, C3 = MCQ$\to$XML, C4 = TR$\to$XML, C5 = SUM$\to$JSON, C6 = MCQ$\to$TR$\to$JSON. Rows above the inner rule are trained on clean claims only (Setting~A), rows below also on transformed training claims (Setting~B).}
+\caption{Macro-F1 (\%) per attack on CLIMATE-FEVER. Chained attacks: C1 = MCQ$\to$TR, C2 = MCQ$\to$JSON, C3 = MCQ$\to$XML, C4 = TR$\to$XML, C5 = SUM$\to$JSON, C6 = MCQ$\to$TR$\to$JSON. Rows above the inner rule are trained on clean claims only (Setting~A), rows below also on transformed training claims (Setting~B). \method{} + \air{} + aug.: the Setting~B variant of \method{}, with the attack-invariant retriever (\air{}) and a verifier also trained on the transformed (augmented) training claims.}
 \label{tab:per_climatefever}
 \end{table*}

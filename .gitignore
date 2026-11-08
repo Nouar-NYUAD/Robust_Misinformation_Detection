@@ -1,0 +1,14 @@
+# Overleaf clone (separate git repository) and paper build output
+overleaf/
+paper/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# local / temporary
+*.log
+.env
+.env.*
+results/preds_api/*/*.resolved.jsonl

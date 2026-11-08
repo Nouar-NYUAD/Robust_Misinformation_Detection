@@ -1,0 +1,11 @@
+{
+ "batch": "msgbatch_018npFsvKNkCYBgkNdT5douD",
+ "status": {
+  "zs:ok": 4800,
+  "ct:ok": 560,
+  "zs:unparsed": 1
+ },
+ "input_tokens": 2070726,
+ "output_tokens": 750639,
+ "cost_usd_batch": 11.647842
+}

@@ -1,0 +1,1 @@
+Vendored from github.com/ICTMCG/ARG (main) and github.com/teacherpeterpan/ProgramFC (main), 2026-11-07. Unmodified except the marked pandas-2 patch in arg_official/utils/dataloader.py and removal of the unused jieba import.

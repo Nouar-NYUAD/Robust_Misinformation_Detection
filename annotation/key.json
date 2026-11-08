@@ -1,0 +1,1682 @@
+{
+ "i001": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_32266",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 6.825603721066897e-08,
+  "judge": 0
+ },
+ "i002": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2989",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999982396569965,
+  "judge": 1
+ },
+ "i003": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_29370",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 9.610239199155213e-05,
+  "judge": 0
+ },
+ "i004": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_6170",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.9999898700126424,
+  "judge": 1
+ },
+ "i005": {
+  "dataset": "finfact",
+  "claim_id": "ff_1125",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.0002611903101150121,
+  "judge": 0
+ },
+ "i006": {
+  "dataset": "climatefever",
+  "claim_id": "cf_666",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9999832985701907,
+  "judge": 1
+ },
+ "i007": {
+  "dataset": "finfact",
+  "claim_id": "ff_589",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999952149055051,
+  "judge": 1
+ },
+ "i008": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_29132",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999996072136592,
+  "judge": 1
+ },
+ "i009": {
+  "dataset": "finfact",
+  "claim_id": "ff_3168",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.9996646499045015,
+  "judge": 1
+ },
+ "i010": {
+  "dataset": "climatefever",
+  "claim_id": "cf_306",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.999841563764002,
+  "judge": 1
+ },
+ "i011": {
+  "dataset": "climatefever",
+  "claim_id": "cf_164",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.9999970976876688,
+  "judge": 1
+ },
+ "i012": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1962",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9999921107355331,
+  "judge": 1
+ },
+ "i013": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_8816",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.999999814460854,
+  "judge": 1
+ },
+ "i014": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1909",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999970976880149,
+  "judge": 1
+ },
+ "i015": {
+  "dataset": "finfact",
+  "claim_id": "ff_1561",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.00015843623599757567,
+  "judge": 0
+ },
+ "i016": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_35340",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9999993524054334,
+  "judge": 1
+ },
+ "i017": {
+  "dataset": "finfact",
+  "claim_id": "ff_981",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999952149055051,
+  "judge": 1
+ },
+ "i018": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_22813",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.0007096703893433613,
+  "judge": 0
+ },
+ "i019": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_29370",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 5.82912724538168e-05,
+  "judge": 0
+ },
+ "i020": {
+  "dataset": "finfact",
+  "claim_id": "ff_477",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9996646499683279,
+  "judge": 1
+ },
+ "i021": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_16065",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.99973880968983,
+  "judge": 1
+ },
+ "i022": {
+  "dataset": "finfact",
+  "claim_id": "ff_1308",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.005220125635441764,
+  "judge": 0
+ },
+ "i023": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_33788",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.18242551936144924,
+  "judge": 0
+ },
+ "i024": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2134",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9994472214475559,
+  "judge": 1
+ },
+ "i025": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2530",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.9999986290421394,
+  "judge": 1
+ },
+ "i026": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2134",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.00010889693528356182,
+  "judge": 0
+ },
+ "i027": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1799",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.00012339461913762155,
+  "judge": 0
+ },
+ "i028": {
+  "dataset": "climatefever",
+  "claim_id": "cf_3008",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999997617630333,
+  "judge": 1
+ },
+ "i029": {
+  "dataset": "finfact",
+  "claim_id": "ff_539",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.9999977396748938,
+  "judge": 1
+ },
+ "i030": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_31659",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 5.8291244691395714e-05,
+  "judge": 0
+ },
+ "i031": {
+  "dataset": "climatefever",
+  "claim_id": "cf_100",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 1.892514598133971e-05,
+  "judge": 0
+ },
+ "i032": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2189",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.9999993524054335,
+  "judge": 1
+ },
+ "i033": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_9368",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9999952149055051,
+  "judge": 1
+ },
+ "i034": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_26589",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.99999627336116,
+  "judge": 1
+ },
+ "i035": {
+  "dataset": "finfact",
+  "claim_id": "ff_1013",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9046505376741749,
+  "judge": 1
+ },
+ "i036": {
+  "dataset": "finfact",
+  "claim_id": "ff_801",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.9999546021475793,
+  "judge": 1
+ },
+ "i037": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2247",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.904650537670552,
+  "judge": 1
+ },
+ "i038": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_42203",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 9.610239206733614e-05,
+  "judge": 0
+ },
+ "i039": {
+  "dataset": "finfact",
+  "claim_id": "ff_457",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9999546021475801,
+  "judge": 1
+ },
+ "i040": {
+  "dataset": "finfact",
+  "claim_id": "ff_1704",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.017986211870243414,
+  "judge": 0
+ },
+ "i041": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_33838",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 4.539785238172423e-05,
+  "judge": 0
+ },
+ "i042": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2745",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.9999970976880151,
+  "judge": 1
+ },
+ "i043": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_14244",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.9999646437450657,
+  "judge": 1
+ },
+ "i044": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_2100",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.9999977396748937,
+  "judge": 1
+ },
+ "i045": {
+  "dataset": "finfact",
+  "claim_id": "ff_1565",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.017986211870272672,
+  "judge": 0
+ },
+ "i046": {
+  "dataset": "finfact",
+  "claim_id": "ff_2733",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999898700126424,
+  "judge": 1
+ },
+ "i047": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_11220",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9999986290421394,
+  "judge": 1
+ },
+ "i048": {
+  "dataset": "finfact",
+  "claim_id": "ff_1294",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 9.610239209177449e-05,
+  "judge": 0
+ },
+ "i049": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_36264",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999952149055052,
+  "judge": 1
+ },
+ "i050": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_30881",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9999977396748938,
+  "judge": 1
+ },
+ "i051": {
+  "dataset": "finfact",
+  "claim_id": "ff_2937",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 5.8291272495308925e-05,
+  "judge": 0
+ },
+ "i052": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_14244",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.0009110513586936925,
+  "judge": 0
+ },
+ "i053": {
+  "dataset": "finfact",
+  "claim_id": "ff_695",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9990889486412531,
+  "judge": 1
+ },
+ "i054": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_17376",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.99999627336116,
+  "judge": 1
+ },
+ "i055": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_23278",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9999993524054334,
+  "judge": 1
+ },
+ "i056": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_4269",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.99999627336116,
+  "judge": 1
+ },
+ "i057": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_12194",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999982396569965,
+  "judge": 1
+ },
+ "i058": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_14212",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9999952149055052,
+  "judge": 1
+ },
+ "i059": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_4289",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.9999417087275019,
+  "judge": 1
+ },
+ "i060": {
+  "dataset": "climatefever",
+  "claim_id": "cf_3124",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.0004305570927208478,
+  "judge": 0
+ },
+ "i061": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_27236",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.00020342704634095324,
+  "judge": 0
+ },
+ "i062": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_32334",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999251537370274,
+  "judge": 1
+ },
+ "i063": {
+  "dataset": "finfact",
+  "claim_id": "ff_1533",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9999646437450657,
+  "judge": 1
+ },
+ "i064": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_33851",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999962733611605,
+  "judge": 1
+ },
+ "i065": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1549",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.060086650384604305,
+  "judge": 0
+ },
+ "i066": {
+  "dataset": "climatefever",
+  "claim_id": "cf_382",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.00010889693515306811,
+  "judge": 0
+ },
+ "i067": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_7281",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.9999970976880149,
+  "judge": 1
+ },
+ "i068": {
+  "dataset": "finfact",
+  "claim_id": "ff_1047",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.9999952149055061,
+  "judge": 1
+ },
+ "i069": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_1885",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.9999991684720715,
+  "judge": 1
+ },
+ "i070": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2966",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.01798621187025419,
+  "judge": 0
+ },
+ "i071": {
+  "dataset": "climatefever",
+  "claim_id": "cf_108",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 1.670142978267426e-05,
+  "judge": 0
+ },
+ "i072": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_22800",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.006692851264816553,
+  "judge": 0
+ },
+ "i073": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2614",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.9999982396569969,
+  "judge": 1
+ },
+ "i074": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2134",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 4.539785239392145e-05,
+  "judge": 0
+ },
+ "i075": {
+  "dataset": "finfact",
+  "claim_id": "ff_1627",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9998766053808288,
+  "judge": 1
+ },
+ "i076": {
+  "dataset": "finfact",
+  "claim_id": "ff_2317",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999938558224682,
+  "judge": 1
+ },
+ "i077": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_22913",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9999986290421394,
+  "judge": 1
+ },
+ "i078": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_728",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9999952149055051,
+  "judge": 1
+ },
+ "i079": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1343",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.9999994956523514,
+  "judge": 1
+ },
+ "i080": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_25931",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.00015843623587561724,
+  "judge": 0
+ },
+ "i081": {
+  "dataset": "finfact",
+  "claim_id": "ff_2424",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.9947798743644928,
+  "judge": 1
+ },
+ "i082": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_21514",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.01798621187025419,
+  "judge": 0
+ },
+ "i083": {
+  "dataset": "climatefever",
+  "claim_id": "cf_298",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9999898700126424,
+  "judge": 1
+ },
+ "i084": {
+  "dataset": "finfact",
+  "claim_id": "ff_2486",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9999038976078545,
+  "judge": 1
+ },
+ "i085": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1718",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.9999970976880148,
+  "judge": 1
+ },
+ "i086": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1394",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999989322970027,
+  "judge": 1
+ },
+ "i087": {
+  "dataset": "finfact",
+  "claim_id": "ff_1792",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.9999977396748937,
+  "judge": 1
+ },
+ "i088": {
+  "dataset": "finfact",
+  "claim_id": "ff_268",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.9999417087274894,
+  "judge": 1
+ },
+ "i089": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_7874",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.4378234991142018,
+  "judge": 0
+ },
+ "i090": {
+  "dataset": "finfact",
+  "claim_id": "ff_2870",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.0015011819937684543,
+  "judge": 0
+ },
+ "i091": {
+  "dataset": "finfact",
+  "claim_id": "ff_1140",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9999869928761863,
+  "judge": 1
+ },
+ "i092": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2134",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 4.006369216676602e-05,
+  "judge": 0
+ },
+ "i093": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_25711",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999977396748938,
+  "judge": 1
+ },
+ "i094": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1981",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999417087274964,
+  "judge": 1
+ },
+ "i095": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_31637",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999977396748938,
+  "judge": 1
+ },
+ "i096": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1549",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.0005527785521178537,
+  "judge": 0
+ },
+ "i097": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_2010",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.9999989322970028,
+  "judge": 1
+ },
+ "i098": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_38035",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999832985701919,
+  "judge": 1
+ },
+ "i099": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_21649",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9999785550413588,
+  "judge": 1
+ },
+ "i100": {
+  "dataset": "finfact",
+  "claim_id": "ff_1224",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9999417087276037,
+  "judge": 1
+ },
+ "i101": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_10720",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.9999997617630333,
+  "judge": 1
+ },
+ "i102": {
+  "dataset": "finfact",
+  "claim_id": "ff_715",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.9999546021475814,
+  "judge": 1
+ },
+ "i103": {
+  "dataset": "climatefever",
+  "claim_id": "cf_3003",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.5,
+  "judge": 1
+ },
+ "i104": {
+  "dataset": "finfact",
+  "claim_id": "ff_1549",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999989322970027,
+  "judge": 1
+ },
+ "i105": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_3916",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.9999938558224682,
+  "judge": 1
+ },
+ "i106": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2086",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9947798743644788,
+  "judge": 1
+ },
+ "i107": {
+  "dataset": "finfact",
+  "claim_id": "ff_3026",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.9999724643121783,
+  "judge": 1
+ },
+ "i108": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_16286",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 1.1478768095563053e-05,
+  "judge": 0
+ },
+ "i109": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2539",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9984988180062339,
+  "judge": 1
+ },
+ "i110": {
+  "dataset": "finfact",
+  "claim_id": "ff_453",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.9999996072136593,
+  "judge": 1
+ },
+ "i111": {
+  "dataset": "climatefever",
+  "claim_id": "cf_849",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.9999785550413592,
+  "judge": 1
+ },
+ "i112": {
+  "dataset": "finfact",
+  "claim_id": "ff_268",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.00857748525497518,
+  "judge": 0
+ },
+ "i113": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1377",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9999921107355331,
+  "judge": 1
+ },
+ "i114": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_33788",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 5.144221351510018e-05,
+  "judge": 0
+ },
+ "i115": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2796",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.00026119031009227674,
+  "judge": 0
+ },
+ "i116": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2994",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.999841563764044,
+  "judge": 1
+ },
+ "i117": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_9709",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.9999994956523512,
+  "judge": 1
+ },
+ "i118": {
+  "dataset": "finfact",
+  "claim_id": "ff_1668",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.9999546021475797,
+  "judge": 1
+ },
+ "i119": {
+  "dataset": "finfact",
+  "claim_id": "ff_3210",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.999925153737014,
+  "judge": 1
+ },
+ "i120": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_30134",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.06008665038448571,
+  "judge": 0
+ },
+ "i121": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2134",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.00012339461917113592,
+  "judge": 0
+ },
+ "i122": {
+  "dataset": "finfact",
+  "claim_id": "ff_2428",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.0015011819937678277,
+  "judge": 0
+ },
+ "i123": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1999",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 6.962257897808018e-06,
+  "judge": 0
+ },
+ "i124": {
+  "dataset": "finfact",
+  "claim_id": "ff_1654",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.00015843623589630967,
+  "judge": 0
+ },
+ "i125": {
+  "dataset": "climatefever",
+  "claim_id": "cf_311",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9999938558224682,
+  "judge": 1
+ },
+ "i126": {
+  "dataset": "finfact",
+  "claim_id": "ff_1693",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9999646437450657,
+  "judge": 1
+ },
+ "i127": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_29130",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999962733611601,
+  "judge": 1
+ },
+ "i128": {
+  "dataset": "climatefever",
+  "claim_id": "cf_971",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9999952149055052,
+  "judge": 1
+ },
+ "i129": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_41044",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.00012339461917113592,
+  "judge": 0
+ },
+ "i130": {
+  "dataset": "climatefever",
+  "claim_id": "cf_633",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999982396569966,
+  "judge": 1
+ },
+ "i131": {
+  "dataset": "climatefever",
+  "claim_id": "cf_11",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.9999993524054335,
+  "judge": 1
+ },
+ "i132": {
+  "dataset": "finfact",
+  "claim_id": "ff_380",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.9999952149055054,
+  "judge": 1
+ },
+ "i133": {
+  "dataset": "finfact",
+  "claim_id": "ff_1838",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.9999977396748937,
+  "judge": 1
+ },
+ "i134": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2164",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9996646499683897,
+  "judge": 1
+ },
+ "i135": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_2853",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.9999982396569965,
+  "judge": 1
+ },
+ "i136": {
+  "dataset": "climatefever",
+  "claim_id": "cf_763",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.9999962733611603,
+  "judge": 1
+ },
+ "i137": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2552",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9999989322970027,
+  "judge": 1
+ },
+ "i138": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1546",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9998766053808317,
+  "judge": 1
+ },
+ "i139": {
+  "dataset": "finfact",
+  "claim_id": "ff_3323",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9241418267688302,
+  "judge": 1
+ },
+ "i140": {
+  "dataset": "finfact",
+  "claim_id": "ff_2459",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.999841563764003,
+  "judge": 1
+ },
+ "i141": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1555",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 1.5534971966430427e-06,
+  "judge": 0
+ },
+ "i142": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1377",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.0003353500311607951,
+  "judge": 0
+ },
+ "i143": {
+  "dataset": "finfact",
+  "claim_id": "ff_2852",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.010986941577945863,
+  "judge": 0
+ },
+ "i144": {
+  "dataset": "finfact",
+  "claim_id": "ff_3215",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9770226275810572,
+  "judge": 1
+ },
+ "i145": {
+  "dataset": "finfact",
+  "claim_id": "ff_962",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.999738809689827,
+  "judge": 1
+ },
+ "i146": {
+  "dataset": "finfact",
+  "claim_id": "ff_2926",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.999997739674894,
+  "judge": 1
+ },
+ "i147": {
+  "dataset": "finfact",
+  "claim_id": "ff_1476",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.99966464996832,
+  "judge": 1
+ },
+ "i148": {
+  "dataset": "finfact",
+  "claim_id": "ff_836",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999646437450658,
+  "judge": 1
+ },
+ "i149": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2150",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.9999785550413586,
+  "judge": 1
+ },
+ "i150": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2485",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.999999814460854,
+  "judge": 1
+ },
+ "i151": {
+  "dataset": "finfact",
+  "claim_id": "ff_3220",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.0002034270465623977,
+  "judge": 0
+ },
+ "i152": {
+  "dataset": "finfact",
+  "claim_id": "ff_2106",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9999921107355337,
+  "judge": 1
+ },
+ "i153": {
+  "dataset": "finfact",
+  "claim_id": "ff_1372",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999996072136593,
+  "judge": 1
+ },
+ "i154": {
+  "dataset": "finfact",
+  "claim_id": "ff_2231",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9980732657060574,
+  "judge": 1
+ },
+ "i155": {
+  "dataset": "climatefever",
+  "claim_id": "cf_35",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.999954602147592,
+  "judge": 1
+ },
+ "i156": {
+  "dataset": "climatefever",
+  "claim_id": "cf_548",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.9999998874648245,
+  "judge": 1
+ },
+ "i157": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1103",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.9999996072136592,
+  "judge": 1
+ },
+ "i158": {
+  "dataset": "finfact",
+  "claim_id": "ff_694",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.04742587351401913,
+  "judge": 0
+ },
+ "i159": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1586",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.999964643745066,
+  "judge": 1
+ },
+ "i160": {
+  "dataset": "finfact",
+  "claim_id": "ff_2460",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.002472622942997763,
+  "judge": 0
+ },
+ "i161": {
+  "dataset": "finfact",
+  "claim_id": "ff_981",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 9.610239196451898e-05,
+  "judge": 0
+ },
+ "i162": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2959",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999251537370162,
+  "judge": 1
+ },
+ "i163": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1971",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.999941708727504,
+  "judge": 1
+ },
+ "i164": {
+  "dataset": "finfact",
+  "claim_id": "ff_1169",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.999983298570191,
+  "judge": 1
+ },
+ "i165": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1469",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 5.422217675671728e-06,
+  "judge": 0
+ },
+ "i166": {
+  "dataset": "finfact",
+  "claim_id": "ff_2540",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999938558224682,
+  "judge": 1
+ },
+ "i167": {
+  "dataset": "finfact",
+  "claim_id": "ff_2630",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9997965729534233,
+  "judge": 1
+ },
+ "i168": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_10777",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9999952149055051,
+  "judge": 1
+ },
+ "i169": {
+  "dataset": "climatefever",
+  "claim_id": "cf_910",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9999997617630333,
+  "judge": 1
+ },
+ "i170": {
+  "dataset": "climatefever",
+  "claim_id": "cf_86",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999785550413586,
+  "judge": 1
+ },
+ "i171": {
+  "dataset": "climatefever",
+  "claim_id": "cf_548",
+  "attack": "SUM>JSON",
+  "label": 0,
+  "p_preserved": 0.9999998874648245,
+  "judge": 1
+ },
+ "i172": {
+  "dataset": "climatefever",
+  "claim_id": "cf_190",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9999938558224682,
+  "judge": 1
+ },
+ "i173": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_31659",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.00010889694831883527,
+  "judge": 0
+ },
+ "i174": {
+  "dataset": "climatefever",
+  "claim_id": "cf_3008",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9999982396569969,
+  "judge": 1
+ },
+ "i175": {
+  "dataset": "finfact",
+  "claim_id": "ff_68",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.0004305570927140918,
+  "judge": 0
+ },
+ "i176": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1507",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9241418267688302,
+  "judge": 1
+ },
+ "i177": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_4078",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.999999814460854,
+  "judge": 1
+ },
+ "i178": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1658",
+  "attack": "JSON",
+  "label": 0,
+  "p_preserved": 0.9999999468421502,
+  "judge": 1
+ },
+ "i179": {
+  "dataset": "finfact",
+  "claim_id": "ff_719",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.99999627336116,
+  "judge": 1
+ },
+ "i180": {
+  "dataset": "finfact",
+  "claim_id": "ff_1496",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.9999989322970028,
+  "judge": 1
+ },
+ "i181": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1931",
+  "attack": "MCQ",
+  "label": 0,
+  "p_preserved": 0.98901305930232,
+  "judge": 1
+ },
+ "i182": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_29327",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9999996940976638,
+  "judge": 1
+ },
+ "i183": {
+  "dataset": "finfact",
+  "claim_id": "ff_985",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.00020342704656205714,
+  "judge": 0
+ },
+ "i184": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_1054",
+  "attack": "XML",
+  "label": 0,
+  "p_preserved": 0.9999996072136593,
+  "judge": 1
+ },
+ "i185": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_2741",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.9999996072136594,
+  "judge": 1
+ },
+ "i186": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_42004",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999993524054335,
+  "judge": 1
+ },
+ "i187": {
+  "dataset": "climatefever",
+  "claim_id": "cf_633",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 8.939699499069623e-06,
+  "judge": 0
+ },
+ "i188": {
+  "dataset": "finfact",
+  "claim_id": "ff_208",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.09534946232868917,
+  "judge": 0
+ },
+ "i189": {
+  "dataset": "climatefever",
+  "claim_id": "cf_108",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 2.1444958616922346e-05,
+  "judge": 0
+ },
+ "i190": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_29261",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9890130584218833,
+  "judge": 1
+ },
+ "i191": {
+  "dataset": "climatefever",
+  "claim_id": "cf_2641",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9999989322970027,
+  "judge": 1
+ },
+ "i192": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_18069",
+  "attack": "MCQ>XML",
+  "label": 0,
+  "p_preserved": 0.9999993524054335,
+  "judge": 1
+ },
+ "i193": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_38755",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999646437450667,
+  "judge": 1
+ },
+ "i194": {
+  "dataset": "climatefever",
+  "claim_id": "cf_108",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 3.535625491584137e-05,
+  "judge": 0
+ },
+ "i195": {
+  "dataset": "finfact",
+  "claim_id": "ff_1565",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.005220125635523486,
+  "judge": 0
+ },
+ "i196": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_26265",
+  "attack": "MCQ>JSON",
+  "label": 1,
+  "p_preserved": 0.9999546021475794,
+  "judge": 1
+ },
+ "i197": {
+  "dataset": "finfact",
+  "claim_id": "ff_2941",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 0.9995694429072772,
+  "judge": 1
+ },
+ "i198": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_31986",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 7.889264466123656e-06,
+  "judge": 0
+ },
+ "i199": {
+  "dataset": "finfact",
+  "claim_id": "ff_2563",
+  "attack": "SUM>JSON",
+  "label": 1,
+  "p_preserved": 0.9999898700126424,
+  "judge": 1
+ },
+ "i200": {
+  "dataset": "finfact",
+  "claim_id": "ff_1563",
+  "attack": "SUM",
+  "label": 0,
+  "p_preserved": 0.9999996940976638,
+  "judge": 1
+ },
+ "i201": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_2410",
+  "attack": "MCQ>JSON",
+  "label": 0,
+  "p_preserved": 0.9999724643121785,
+  "judge": 1
+ },
+ "i202": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_35340",
+  "attack": "MCQ>XML",
+  "label": 1,
+  "p_preserved": 0.9999982396569965,
+  "judge": 1
+ },
+ "i203": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_13503",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.9999991684720715,
+  "judge": 1
+ },
+ "i204": {
+  "dataset": "climatefever",
+  "claim_id": "cf_1477",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 1.6701429809483402e-05,
+  "judge": 0
+ },
+ "i205": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_29383",
+  "attack": "JSON",
+  "label": 1,
+  "p_preserved": 0.9999962733611601,
+  "judge": 1
+ },
+ "i206": {
+  "dataset": "finfact",
+  "claim_id": "ff_1005",
+  "attack": "MCQ",
+  "label": 1,
+  "p_preserved": 0.32082128783705344,
+  "judge": 0
+ },
+ "i207": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_35674",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9999970976880149,
+  "judge": 1
+ },
+ "i208": {
+  "dataset": "finfact",
+  "claim_id": "ff_192",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9995694429073024,
+  "judge": 1
+ },
+ "i209": {
+  "dataset": "pubhealth",
+  "claim_id": "ph_35061",
+  "attack": "XML",
+  "label": 1,
+  "p_preserved": 1.1478768123502996e-05,
+  "judge": 0
+ },
+ "i210": {
+  "dataset": "finfact",
+  "claim_id": "ff_2929",
+  "attack": "SUM",
+  "label": 1,
+  "p_preserved": 0.9988304896996956,
+  "judge": 1
+ }
+}

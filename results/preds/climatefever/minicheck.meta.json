@@ -1,0 +1,1 @@
+{"threshold": 0.9820150946670441, "args": {"dataset": "climatefever", "method": "minicheck", "llm": "bespokelabs/Bespoke-MiniCheck-7B", "encoder": null, "k": 5, "no_canon": false, "canon_kind": "ours", "canon_input": null, "no_sparse": false, "no_rerank": false, "tag": "", "limit": 0, "verifier_lora": null}}

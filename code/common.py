@@ -12,6 +12,13 @@ ROOT = Path(__file__).resolve().parents[1]
 DATASETS = ["pubhealth", "climatefever", "finfact"]
 ATTACK_ORDER = ["CLEAN", "TR_fr", "TR_es", "TR_ar", "TR_hi", "TR_zh", "SUM", "MCQ", "XML", "JSON",
                 "TR>MCQ", "MCQ>JSON", "MCQ>XML", "TR>XML", "SUM>JSON", "TR>MCQ>JSON"]
+# Display names for papers and figures, in the order the transformations are applied (gen_attacks.ATTACKS): the
+# internal names TR>MCQ and TR>MCQ>JSON build the multiple-choice question FIRST and then translate it.
+ATTACK_DISPLAY = {"TR>MCQ": "MCQ>TR", "TR>MCQ>JSON": "MCQ>TR>JSON"}
+
+
+def display(attack):
+    return ATTACK_DISPLAY.get(attack, attack)
 
 
 def read_jsonl(p):

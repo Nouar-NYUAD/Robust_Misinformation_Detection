@@ -1,0 +1,1 @@
+{"threshold": 0.5134928059577942, "args": {"dataset": "climatefever", "model": "FacebookAI/xlm-roberta-large", "tag": "xlmr", "epochs": 5, "lr": 1e-05, "seed": 13, "aug": false}}

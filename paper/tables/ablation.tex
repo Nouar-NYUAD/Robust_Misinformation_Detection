@@ -1,0 +1,25 @@
+\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{2}{c}{PUBHEALTH} & \multicolumn{2}{c}{CLIMATE-FEVER} & \multicolumn{2}{c}{Fin-Fact} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+Model & Clean & Att. & Clean & Att. & Clean & Att. \\
+\midrule
+Full \method{} & 82.4 & 77.0 & 75.5 & 71.6 & 78.6 & 74.7 \\
+\midrule
+\multicolumn{7}{l}{\emph{Remove one component}} \\
+\quad Canonicalisation (raw input only) & 85.1$^{*}$ & 76.8 & 82.7$^{*}$ & 62.5$^{*}$ & 81.5 & 70.1$^{*}$ \\
+\quad Sparse retrieval (dense only) & 82.7 & 77.1 & 77.1 & 72.0 & 79.5 & 75.3 \\
+\quad Cross-encoder reranker & 80.9 & 77.2 & 77.2 & 73.3 & 78.6 & 74.9 \\
+\quad Verifier training (off-the-shelf LLM) & 70.9$^{*}$ & 66.3$^{*}$ & 69.4$^{*}$ & 64.1$^{*}$ & 66.5$^{*}$ & 67.7$^{*}$ \\
+\midrule
+\multicolumn{7}{l}{\emph{Replace one component (original $\to$ replacement)}} \\
+\quad Canonicalisation $\to$ generic claim normalisation & 83.2 & 76.1 & 78.6 & 70.6 & 78.7 & 74.5 \\
+\quad Canonicalisation $\to$ \air{} dense encoder & 83.6 & 78.4$^{*}$ & 82.7$^{*}$ & 64.3$^{*}$ & 81.8$^{*}$ & 71.0$^{*}$ \\
+\quad BGE-M3 $\to$ mE5 (dense only) & 81.0 & 76.7 & 75.6 & 69.4 & 79.7 & 75.3 \\
+\quad BGE-M3 dense encoder $\to$ \air{} encoder & 81.1 & 77.2 & 76.8 & 71.5 & 78.6 & 74.6 \\
+\bottomrule
+\end{tabular}\end{adjustbox}
+\caption{Ablations of \method{}. Each row removes one component of the full model, or replaces it with the alternative after the arrow, and keeps everything else unchanged. Macro-F1 (\%) on clean claims and averaged over the fifteen attacks (Att.); all rows use the first seed. $^{*}$: significantly different from the full model (paired bootstrap, $p<0.05$).}
+\label{tab:ablation}
+\end{table*}

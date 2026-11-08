@@ -6,6 +6,7 @@ paper/tables/prompts.tex  every prompt used, read from the source files with `as
 """
 import ast, json, re
 from pathlib import Path
+from common import display
 
 ROOT = Path(__file__).resolve().parents[1]
 CODE = ROOT / "code"
@@ -71,7 +72,7 @@ def example_tables():
             return esc(wrapper) + f" \\newline \\emph{{[{desc}]}}"
         return esc(shorten(r["query"]))
 
-    name = lambda a: a.replace("TR_", "Translate ").replace(">", "$\\to$").replace("SUM", "Summarise")
+    name = lambda a: display(a).replace("TR_", "Translate ").replace(">", "$\\to$").replace("SUM", "Summarise")
     single = ["TR_fr", "TR_es", "TR_ar", "TR_hi", "TR_zh", "SUM", "MCQ", "XML", "JSON"]
     chains = [a for a in rows if ">" in a]
     out = []
@@ -114,7 +115,7 @@ def prompts_tex():
     wr = re.findall(r'"([A-Z_>{}a-z]+)":\s*\(\[[^\]]*\],\s*"([^"]+)"\)', (CODE / "gen_attacks.py").read_text(encoding="utf-8"))
     assert len(wr) == 11 and wr[0][0] == "TR_{l}", wr  # one translation template (5 languages) + 10 others
     disp = lambda a: ("Translation (each language)" if a == "TR_{l}" else
-                      esc(a).replace("\\textgreater{}", " $\\to$ ").replace("TR", "Translate"))
+                      esc(display(a)).replace("\\textgreater{}", " $\\to$ ").replace("TR", "Translate"))
     s.append("\\begin{quote}\\small " + " \\newline ".join(
         f"{disp(a)}: \\texttt{{{esc(placeholders(w))}}}" for a, w in wr) + "\\end{quote}\n")
     s += ["\\subsection{Preservation judge (Gemma-3-12B)}", prompt_block("Judge", va["PROMPT"]),

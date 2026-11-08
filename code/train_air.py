@@ -1,7 +1,7 @@
 """Attack-invariant retrieval (AIR): contrastive fine-tuning of the BGE-M3 dense encoder so that a transformed
 TRAIN claim (anchor) embeds close to its own archive record (positive) and away from other train claims
 (in-batch negatives + one mined hard negative). Only train-split data are used. One shared model is trained on
-the union of the three training splits; dev claims (clean) are used for early stopping via retrieval accuracy.
+the union of the three training splits for a fixed single epoch (no early stopping; dev data are not used here).
 
 usage: python train_air.py --out /scratch/naa9497/misinfo/models/bgem3-air
 """

@@ -1,0 +1,1 @@
+{"threshold": 0.4378571935215899, "args": {"dataset": "finfact", "method": "ours", "llm": "meta-llama/Meta-Llama-3.1-8B-Instruct", "encoder": null, "k": 5, "no_canon": false, "canon_kind": "norm", "canon_input": null, "no_sparse": false, "no_rerank": false, "tag": "vtrained_normcanon", "limit": 0, "verifier_lora": "/scratch/naa9497/misinfo/models/verifier_lora"}}

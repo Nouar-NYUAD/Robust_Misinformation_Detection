@@ -1,0 +1,1 @@
+{"threshold": 6.632798308960848e-06, "args": {"dataset": "climatefever", "method": "zs", "llm": "Qwen/Qwen2.5-7B-Instruct", "encoder": null, "k": 5, "no_canon": false, "canon_kind": "ours", "canon_input": "ours", "no_sparse": false, "no_rerank": false, "tag": "qwen+canon", "limit": 0}}

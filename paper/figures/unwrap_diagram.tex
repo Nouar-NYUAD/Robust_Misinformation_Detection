@@ -1,0 +1,52 @@
+% Block diagram of the threat model and of UNWRAP (+AIR). Included by main.tex inside a figure* environment.
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize, >=Stealth, node distance=4mm and 6mm,
+  box/.style={draw, rounded corners=2pt, align=center, minimum height=10mm, inner sep=3pt, fill=white},
+  att/.style={box, fill=orange!12, draw=orange!70!black},
+  ours/.style={box, fill=blue!8, draw=blue!60!black, text width=25mm, minimum height=17mm},
+  data/.style={box, fill=gray!10, draw=gray!60!black},
+  outbox/.style={box, fill=green!10, draw=green!45!black, text width=16mm, minimum height=17mm},
+  lab/.style={font=\sffamily\tiny, align=center, text=black!75, fill=white, inner sep=1pt},
+  arr/.style={->, thick, black!75}]
+
+% ---------------- threat model (top row)
+\node[att, text width=20mm] (claim) {Fact-checked claim\\(true or false)};
+\node[att, right=8mm of claim, text width=30mm] (attacker) {Attacker LLM (Qwen2.5-32B)\\{\tiny translate $\cdot$ summarise $\cdot$ MCQ $\cdot$ XML $\cdot$ JSON}\\{\tiny and chains of these}};
+\node[att, right=8mm of attacker, text width=34mm] (input) {Attacked input\\{\tiny task wrapper + transformed text, e.g.}\\{\tiny ``Parse this JSON and answer the question''}};
+\draw[arr] (claim) -- (attacker);
+\draw[arr] (attacker) -- (input);
+\node[font=\sffamily\tiny, text=black!70, above=1mm of attacker] {format-shifting attack: the claim's content is not changed};
+
+% ---------------- UNWRAP pipeline (middle row)
+\node[ours, below=14mm of claim.south west, anchor=north west] (canon) {\textbf{1. Canonicalise}\\Llama-3.1-8B\\[1pt]{\tiny ignore task and format,}\\{\tiny translate, recover asserted}\\{\tiny and presupposed claims}};
+\node[ours, right=7mm of canon] (retr) {\textbf{2. Hybrid retrieval}\\BGE-M3 dense + sparse\\[1pt]{\tiny views: raw input and}\\{\tiny each claim; reciprocal}\\{\tiny rank fusion}};
+\node[ours, right=7mm of retr] (rerank) {\textbf{3. Rerank}\\bge-reranker-v2-m3\\[1pt]{\tiny cross-encoder scores}\\{\tiny candidates against the}\\{\tiny claims; keep top 5}};
+\node[ours, right=7mm of rerank] (verify) {\textbf{4. Verify}\\Llama-3.1-8B\\[1pt]{\tiny same claim as a record}\\{\tiny verified FALSE / TRUE?}\\{\tiny otherwise use evidence}};
+\node[outbox, right=7mm of verify] (dec) {\textbf{Decision}\\[1pt]$P(\text{false})\geq\tau$\\[1pt]{\tiny $\tau$ chosen on}\\{\tiny clean dev data}};
+
+\draw[arr] (canon) -- node[lab, above=1pt] {claims} (retr);
+\draw[arr] (retr) -- node[lab, above=1pt] {top 20} (rerank);
+\draw[arr] (rerank) -- node[lab, above=1pt] {top 5} (verify);
+\draw[arr] (verify) -- (dec);
+
+% input -> canonicaliser (solid) and input -> retrieval as the raw view (dashed)
+\coordinate (split) at ($(input.south)+(0,-5mm)$);
+\draw[thick, black!75] (input.south) -- (split);
+\draw[arr] (split) -| (canon.north);
+\draw[arr, dashed] (split) -| node[lab, pos=0.72, right=1pt] {raw view} (retr.north);
+
+% canonical claims also go to the verifier (below the boxes)
+\coordinate (cbot) at ($(canon.south)+(0,-4mm)$);
+\draw[arr, dotted] (canon.south) -- (cbot) -- node[lab, pos=0.8] {canonical claims} (cbot -| verify.south) -- (verify.south);
+
+% ---------------- archive and AIR (bottom row)
+\node[data, text width=52mm, below=13mm of $(retr.south)!0.5!(rerank.south)$] (kb) {\textbf{Verified-claim archive} (training split only)\\{\tiny each record: claim + TRUE / FALSE verdict + evidence passages}};
+\node[data, fill=blue!4, text width=30mm, left=24mm of kb] (air) {\textbf{AIR training}\\{\tiny contrastive fine-tuning of the BGE-M3}\\{\tiny dense encoder on transformed}\\{\tiny \emph{training} claims (seen attack types)}};
+\draw[arr] (kb.north -| retr.south) -- node[lab, right=1pt, pos=0.35] {records} (retr.south |- cbot);
+\draw[arr, dashed] (air.east) -- node[lab, above=2pt, align=center] {fine-tuned\\encoder} (kb.west);
+
+\begin{scope}[on background layer]
+  \node[draw=blue!60!black, dashed, rounded corners=4pt, fit=(canon)(retr)(rerank)(verify)(kb)(air), inner sep=5pt] (frame) {};
+\end{scope}
+\node[font=\sffamily\scriptsize\bfseries, text=blue!60!black, anchor=south east] at (frame.south east) {\textsc{Unwrap} (+\textsc{Air})\ };
+\end{tikzpicture}

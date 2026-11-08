@@ -20,7 +20,7 @@ from compare import paired_diff, method_files
 CLAUDE = "zs_claude"
 METHODS = ["kotonya", "arg", "programfc", "minicheck", "rag", "zs", "zs_qwen", "clf_xlmr", "ours_vtrained",
            "kotonya-advtrain", "arg-advtrain", "clf_xlmr-advtrain", "ours_air_vtrained_aug"]
-COMPARE = ["ours_vtrained", "ours_air_vtrained_aug", "clf_xlmr-advtrain", "zs"]
+COMPARE = ["ours_vtrained", "ours_air_vtrained_aug", "clf_xlmr-advtrain", "zs", "rag"]
 
 
 def claude_file(ds, none_as=0):

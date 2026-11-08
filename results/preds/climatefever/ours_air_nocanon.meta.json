@@ -1,0 +1,1 @@
+{"threshold": 0.36396122962379873, "args": {"dataset": "climatefever", "method": "ours", "llm": "meta-llama/Meta-Llama-3.1-8B-Instruct", "encoder": "air", "k": 5, "no_canon": true, "canon_kind": "ours", "canon_input": null, "no_sparse": false, "no_rerank": false, "tag": "air_nocanon", "limit": 0}}

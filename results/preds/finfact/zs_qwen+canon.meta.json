@@ -1,0 +1,1 @@
+{"threshold": 2.1444950043180136e-05, "args": {"dataset": "finfact", "method": "zs", "llm": "Qwen/Qwen2.5-7B-Instruct", "encoder": null, "k": 5, "no_canon": false, "canon_kind": "ours", "canon_input": "ours", "no_sparse": false, "no_rerank": false, "tag": "qwen+canon", "limit": 0}}

@@ -1,0 +1,37 @@
+\begin{table*}[t]\centering\footnotesize
+\begin{tabular}{@{}p{0.13\textwidth}p{0.84\textwidth}@{}}
+\toprule
+Attack & Text given to the detector \\
+\midrule
+Clean & Eating more fish could prevent Parkinson's disease \\ \midrule
+Translate fr & Translate from French to English: \newline \emph{[French text]} \\
+Translate es & Translate from Spanish to English: \newline \emph{[Spanish text]} \\
+Translate ar & Translate from Arabic to English: \newline \emph{[Arabic text]} \\
+Translate hi & Translate from Hindi to English: \newline \emph{[Hindi text]} \\
+Translate zh & Translate from Chinese to English: \newline \emph{[Chinese text]} \\
+Summarise & Summarize the following text in one block in five lines: The headline "Eating more fish could prevent Parkinson's disease" suggests a potential dietary approach to mitigating the risk of developing Parkinson's disease, a progressive disorder of the nervous system that affects movement. This headline encapsulates a growing body of research that explores the connection between [...] \\
+MCQ & Answer the following question: Why might eating more fish be beneficial according to recent studies? A) It increases muscle mass. B) It prevents Parkinson's disease. C) It improves vision. D) It enhances cognitive abilities in the elderly. \\
+XML & Parse the following XML document and rewrite its content as plain English text: \textless{}document\textgreater{} \textless{}headline\textgreater{} Consuming a higher quantity of fish in one's diet might help in reducing the risk of developing Parkinson's disease. \textless{}/headline\textgreater{} \textless{}description\textgreater{} Parkinson's disease is a progressive disorder of the nervous system that affects movement, often leading to symptoms such as [...] \\
+JSON & Parse the following JSON object and rewrite its content as plain English text: \{ "headline": "Consuming a higher quantity of fish in one's diet might help in reducing the risk of developing Parkinson's disease", "parkinsons\_disease\_description": "Parkinson's disease is a progressive disorder of the nervous system that affects movement, often leading to symptoms such as tremors, [...] \\
+\bottomrule
+\end{tabular}
+\caption{One false PUBHEALTH test claim under the single attacks, as given to the detectors (the attack text and its task wrapper). Long texts are cut after 55 words ([...]); texts in other languages are described in brackets rather than shown. The judge found that every attacked version preserves the claim.}
+\label{tab:example_single}
+\end{table*}
+
+\begin{table*}[t]\centering\footnotesize
+\begin{tabular}{@{}p{0.13\textwidth}p{0.84\textwidth}@{}}
+\toprule
+Attack & Text given to the detector \\
+\midrule
+MCQ$\to$TR & Translate the following question from Spanish to English and answer it: \newline \emph{[multiple-choice question in Spanish]} \\
+MCQ$\to$JSON & The following JSON object contains a multiple-choice question. Parse it and answer the question: \{ "question": "Why might eating more fish be beneficial according to recent studies?", "options": \{ "A": "It increases muscle mass.", "B": "It prevents Parkinson's disease.", "C": "It improves vision.", "D": "It enhances cognitive abilities in the elderly." \} \} \\
+MCQ$\to$XML & The following XML document contains a multiple-choice question. Parse it and answer the question: \textless{}document\textgreater{} \textless{}question\textgreater{}Why might eating more fish be beneficial according to recent studies?\textless{}/question\textgreater{} \textless{}options\textgreater{} \textless{}option id="A"\textgreater{}It increases muscle mass.\textless{}/option\textgreater{} \textless{}option id="B"\textgreater{}It prevents Parkinson's disease.\textless{}/option\textgreater{} \textless{}option id="C"\textgreater{}It improves vision.\textless{}/option\textgreater{} \textless{}option id="D"\textgreater{}It enhances cognitive abilities in the elderly.\textless{}/option\textgreater{} \textless{}/options\textgreater{} \textless{}/document\textgreater{} \\
+TR$\to$XML & Parse the following XML document, whose text is in Spanish, and translate its content to English: \newline \emph{[XML document in Spanish]} \\
+Summarise$\to$JSON & Parse the following JSON object and summarize its content in one block in five lines: \{ "headline": "Eating more fish could prevent Parkinson's disease", "summary": "Suggests a potential dietary approach to mitigating the risk of developing Parkinson's disease, a progressive disorder of the nervous system affecting movement.", "details": \{ "disease\_characteristics": "Characterized by the loss of [...] \\
+MCQ$\to$TR$\to$JSON & The following JSON object contains a multiple-choice question in Spanish. Parse it, translate the question to English, and answer it: \newline \emph{[JSON object containing a multiple-choice question in Spanish]} \\
+\bottomrule
+\end{tabular}
+\caption{One false PUBHEALTH test claim under the chained attacks, as given to the detectors (the attack text and its task wrapper). Long texts are cut after 55 words ([...]); texts in other languages are described in brackets rather than shown. The judge found that every attacked version preserves the claim. The chained translations of this claim are into Spanish.}
+\label{tab:example_chain}
+\end{table*}

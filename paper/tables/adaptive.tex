@@ -1,0 +1,16 @@
+\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lccccccccc}
+\toprule
+ & \multicolumn{3}{c}{PUBHEALTH} & \multicolumn{3}{c}{CLIMATE-FEVER} & \multicolumn{3}{c}{Fin-Fact} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+Detector & Base & Inj. & Decoy & Base & Inj. & Decoy & Base & Inj. & Decoy \\
+\midrule
+Claim retrieval + LLM & 63.3 & 61.3 & 56.0 & 45.9 & 47.8 & 45.2 & 65.8 & 64.0 & 57.6 \\
+XLM-R, adv.\ training & 72.1 & 66.4 & 66.8 & 71.8 & 66.9 & 58.6 & 74.6 & 67.7 & 67.4 \\
+\method{} & 75.9 & 72.8 & 67.2 & 68.1 & 65.3 & 56.8 & 76.6 & 71.4 & 62.6 \\
+\method{} + \air{} + aug. & 77.3 & 70.9 & 65.5 & 66.2 & 54.4 & 48.4 & 79.3 & 70.4 & 62.3 \\
+\bottomrule
+\end{tabular}\end{adjustbox}
+\caption{Adaptive attacks. Macro-F1 (\%) averaged over the summarisation and MCQ$\rightarrow$JSON attacks, without (Base) and with an injected instruction to the claim extractor (Inj.) or three true decoy claims around the content (Decoy).}
+\label{tab:adaptive}
+\end{table*}

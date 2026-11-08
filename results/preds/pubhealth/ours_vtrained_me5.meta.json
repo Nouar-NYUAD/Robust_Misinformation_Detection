@@ -1,0 +1,1 @@
+{"threshold": 0.3208625276311762, "args": {"dataset": "pubhealth", "method": "ours", "llm": "meta-llama/Meta-Llama-3.1-8B-Instruct", "encoder": "me5", "k": 5, "no_canon": false, "canon_kind": "ours", "canon_input": null, "no_sparse": true, "no_rerank": false, "tag": "vtrained_me5", "limit": 0, "verifier_lora": "/scratch/naa9497/misinfo/models/verifier_lora"}}

@@ -8,7 +8,7 @@ out: paper/tables/{main,ablation,plugin,seen_unseen,adaptive,contamination,prese
 """
 import csv, json
 import numpy as np
-from common import ROOT, DATASETS, ATTACK_ORDER
+from common import ROOT, DATASETS, ATTACK_ORDER, display
 
 T = ROOT / "results/tables"
 C = ROOT / "results/contamination"
@@ -334,7 +334,7 @@ def preservation_table():
         overall[d + "_true"] = float(np.mean([float(r["preserved_true"]) for r in rs]))
     overall["all"] = float(np.average([overall[d] for d in DATASETS], weights=[int(P[d, ATTACKS[0]]["n"]) for d in DATASETS]))
     nums["preservation"] = overall
-    short = {a: a.replace("TR_", "").replace(">", "$\\to$") for a in ATTACKS}
+    short = {a: display(a).replace("TR_", "").replace(">", "$\\to$") for a in ATTACKS}
     lines = ["\\begin{table}[t]\\color{newtext}\\centering\\small", "\\begin{tabular}{lccc}", "\\toprule",
              "Attack & PUBH. & C-FEVER & Fin-Fact \\\\", "\\midrule"]
     for a in ATTACKS:
@@ -356,7 +356,7 @@ SHORT = {"kotonya": "SciBERT + evidence", "arg": "ARG", "programfc": "ProgramFC"
 
 def per_attack_table(d):
     """two stacked panels so that the table fits the text width at normal size: clean + single attacks, then chains"""
-    short = {a: a.replace("TR_", "").replace(">", "$\\to$") for a in ATTACKS}
+    short = {a: display(a).replace("TR_", "").replace(">", "$\\to$") for a in ATTACKS}
     single = ["CLEAN"] + [a for a in ATTACKS if ">" not in a]
     chains = [a for a in ATTACKS if ">" in a]
     ncol = len(single)

@@ -1,0 +1,245 @@
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,calc}
+
+% New text is red so co-authors can see what was added; switch to black once reviewed.
+\colorlet{newtext}{black}
+\usepackage{adjustbox}
+% Placeholders for numbers that come from the experiments (results/tables, via make_tables.py)
+\newcommand{\tbd}[1]{\textbf{[#1]}}
+\newcommand{\method}{\textsc{Unwrap}}
+\newcommand{\air}{\textsc{Air}}
+
+\title{Verify the Claim, Not the Text: Format-Shifting Attacks on\\Misinformation Detectors and a Robust Defence}
+
+\author{Anonymous ACL submission}
+
+\begin{document}
+\color{newtext}
+\maketitle
+
+\begin{abstract}
+Misinformation detectors are evaluated on claims written as plain statements, yet text often reaches them after a language model has translated it, summarised it, turned it into a quiz question, or serialised it as XML or JSON. We study such \emph{format-shifting attacks}, which keep a false claim intact and change only its surface form, alone and chained. On PUBHEALTH, CLIMATE-FEVER and Fin-Fact, published detectors such as ARG, ProgramFC and MiniCheck, and zero-shot LLMs, lose 19.6 macro-F1 points on average and up to 49 points, although no word of the claim changes; Claude Opus~5.5 still loses 15 to 17 points on two of the benchmarks. We propose \method{}, a detector that verifies the claim rather than the text: it canonicalises any input into the English claims it asserts or presupposes, retrieves verified true and false claims with a hybrid multilingual retriever, reranks them, and decides with a verdict-aware verifier trained on clean claims only. \method{} has the best clean macro-F1 on all three benchmarks, loses only 4.4 to 5.6 points under attack and, compared under the same training conditions, is significantly more robust than every baseline in 32 of 33 comparisons, the remaining one being a statistical tie. Adversarial training protects most classifiers only against the attack families they were trained on. We release the attacked test sets and code.
+\end{abstract}
+
+\section{Introduction}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_clean_vs_attacked.pdf}
+\caption{Macro-F1 on clean test claims (rings) and averaged over fifteen format-shifting attacks (dots). Published detectors and zero-shot LLMs lose up to 49 points although the claim itself is unchanged; \method{} stays close to its clean performance without seeing any attacked text (Setting~A). Setting~B adds transformed training claims to all detectors. The attacked score is printed at the right of each panel.}
+\label{fig:teaser}
+\end{figure*}
+
+
+Misinformation detection has mostly been studied as the classification of claims, headlines or posts in their original form \citep{zellers2019grover,thorne2018fever,guo2022survey}. Benchmarks such as PUBHEALTH \citep{kotonya2020pubhealth}, CLIMATE-FEVER \citep{diggelmann2020climatefever} and Fin-Fact \citep{rangapur2023finfact} pair each claim with a verdict from professional fact-checkers, and detectors are trained and tested on the claims as published. Deployed detectors rarely see claims in that form: users ask assistants to translate an article, summarise a thread or answer a question, platforms pass user content to LLM services as structured requests, and adversaries can use the same tools to repackage a false claim at no cost.
+
+Existing robustness work perturbs the claim itself, by substituting words, paraphrasing, or rewriting it with an LLM \citep{przybyla2024bodega,bethany2025camouflage}. We study a simpler and, we argue, more realistic family of attacks that leaves the claim untouched and shifts its \emph{format}: the claim is expanded and translated, embedded in an article to be summarised, presupposed by a multiple-choice question that begins with ``Why'', or serialised as XML or JSON to be parsed. These steps can be chained, for instance by turning a claim into a question, translating the question into Arabic and wrapping it in JSON. Each step is a routine request to an LLM, and the false claim survives every step intact.
+
+Each of these formats is a documented route around existing safeguards. Content in languages other than English is moderated less: Facebook had not labelled 70\% of the Spanish and 68\% of the Italian fact-checked COVID-19 misinformation posts examined by \citet{avaaz2020flatten}, against 29\% of the English ones, and language models used for content analysis perform unevenly across languages \citep{nicholas2023lost}. News increasingly reaches readers through AI assistants that rewrite it, and in a study of more than 3,000 answers, 45\% of the assistants' answers about news had at least one significant issue \citep{ebu2025newsintegrity}. A question that presupposes a fact makes people more likely to later report it as true \citep{loftus1975leading}, and a quarter of real information-seeking questions rest on false presuppositions \citep{yu2023crepe}. Recasting a request as code or structured data bypasses the safety training of LLMs more than 80\% of the time \citep{ren2024codeattack}, which suggests that structured formats can also hide content from LLM-based screening.
+
+We make four contributions. First, we define fifteen format-shifting attacks (five translations, summarisation, multiple-choice questions, XML, JSON and six chains) and apply them to the test sets of three benchmarks in three domains; an independent judge model confirms that the attacked texts still convey the claim. Second, we show that published detectors and zero-shot LLMs degrade sharply under these attacks even when they are strong on clean claims: the evidence classifier of \citet{kotonya2020pubhealth}, for instance, falls from 79.2 to 33.0 macro-F1 on PUBHEALTH. Third, we propose \method{}, which canonicalises the input into the English claims it asserts or takes for granted, retrieves verified claims of both verdicts from an archive built from the training split, reranks them, and lets a verdict-aware LLM verifier, fine-tuned on clean training claims, decide. Fourth, we show that adversarial training largely fails to close the gap: classifiers trained on transformed claims recover on the attack families they saw but not on new languages, formats or chains.
+
+Every detector is trained, or given its retrieval archive, on the training split only, calibrated on clean development data, and evaluated on the held-out test claims, clean and attacked. In Setting~A, no detector sees attacked or transformed text; in Setting~B, detectors are also trained on transformed training claims of four attack families, produced by a different generator than the test attacks, which shows how much of the gap data augmentation closes and whether it transfers to held-out attack families.
+
+\section{Related Work}
+
+Misinformation detectors range from classifiers fine-tuned on labelled claims \citep{kotonya2020pubhealth,guo2022survey} to evidence-based fact-checkers that retrieve documents \citep{thorne2018fever}, decompose claims with LLMs \citep{pan2023programfc} or check claims against grounding documents with small verifiers \citep{tang2024minicheck}; retrieval-augmented generation \citep{lewis2020rag} gives LLMs access to verified information. Our detector belongs to the line of work that detects \emph{previously fact-checked claims} by retrieving them from an archive of fact-checks \citep{shaar2020knownlie}, which has also been studied across languages \citep{pikuliak2023multiclaim}.
+
+Claim normalisation rewrites a noisy social-media post into a concise check-worthy claim \citep{sundriyal2023claimnorm}, and SUCEA \citep{liu2025sucea} segments, decontextualises and edits adversarially paraphrased claims so that evidence retrieval succeeds. Both assume that the input states its claim, if noisily or in other words. Format-shifting attacks instead hide an unchanged claim behind a task, a language or a serialisation, and may only presuppose it. Our canonicaliser is instructed for exactly these cases, and we compare it with a generic normalisation prompt in our ablations.
+
+Adversarial attacks on misinformation detectors edit the claim: BODEGA \citep{przybyla2024bodega} benchmarks word- and character-level perturbations against credibility classifiers, and CAMOUFLAGE \citep{bethany2025camouflage} rewrites claims with an LLM so that evidence retrieval fails. Our attacks leave the claim unchanged, need no access to the detector and no optimisation, and compose freely. They are closer to attacks on LLM safety, where low-resource languages \citep{yong2023lowresource,deng2024multilingual}, ciphers \citep{yuan2024cipher} and instructions hidden in processed content \citep{greshake2023indirect} bypass safeguards; we use the last of these as an adaptive attack against our own canonicaliser.
+
+\section{Threat Model and Attacks}
+\label{sec:attacks}
+
+We consider a detector that screens text before it is published, forwarded or processed by an LLM-based service, and decides whether it spreads false information. The attacker holds a fact-checked false claim and wants it to pass, for example so that an assistant translates, summarises or answers it and thereby repeats it; the attacker can use general-purpose LLMs but has no access to the detector, its archive or its scores. Since the same transformations apply to true claims, a robust detector must also not flag true claims merely because of their format.
+
+Each attack transforms a claim and adds a task wrapper that a downstream LLM would execute. The single-step attacks are \emph{translation} (the claim is expanded into a short paragraph and translated into French, Spanish, Arabic, Hindi or Chinese, wrapped in ``Translate from \ldots{} to English''), \emph{summarisation} (an article of about 500 words built around the claim, wrapped in a summarisation request), \emph{multiple-choice question} (a ``Why'' question whose options include the claim, wrapped in ``Answer the following question'') and \emph{XML} and \emph{JSON} (the expanded claim serialised as a document, wrapped in a parsing request). The six chains apply, in this order, MCQ$\rightarrow$translate, MCQ$\rightarrow$JSON, MCQ$\rightarrow$XML, translate$\rightarrow$XML, summarise$\rightarrow$JSON and MCQ$\rightarrow$translate$\rightarrow$JSON, with a random language per claim. Appendices~\ref{sec:appendix_attacks} and~\ref{sec:appendix_prompts} show one claim under every attack and all prompts.
+
+The test attacks are sampled from Qwen2.5-32B-Instruct \citep{qwen2024qwen25}, a model family different from our detector's, so that the detector cannot benefit from recognising its own writing style. An independent judge from a third family, Gemma-3-12B \citep{gemma2025gemma3}, decided for every attacked text whether it asserts, repeats or takes for granted the original claim; 92.7\% did, between 82.8\% (summarisation on Fin-Fact) and 98.9\% per attack and dataset (Table~\ref{tab:preservation}). \tbd{Human validation of the judge: agreement between human annotators and the judge on a stratified sample of attacked texts.} The check matters because an attacker asked to discuss a false headline sometimes debunks it instead. All results in the main paper are therefore computed on the attacked texts that the judge found to preserve the claim, for true and false claims alike; scored on all attacked texts instead, the five most robust detectors keep their ranking on every dataset. Two adaptive attacks against our own pipeline are reported separately (Appendix~\ref{sec:appendix_analyses}).
+
+\section{Method: \method{}}
+\label{sec:method}
+
+\method{} rests on a simple observation: format-shifting attacks change everything about the text except the claim, so a detector should operate on the claim. Figure~\ref{fig:system} gives an overview.
+
+\begin{figure*}[t]
+\centering
+{\color{black}\resizebox{\textwidth}{!}{\input{figures/unwrap_diagram.tex}}}
+\color{newtext}
+\caption{Threat model (top) and \method{} (bottom). An attacker LLM changes only the format of a fact-checked claim and wraps it in a task. \method{} canonicalises the input into the claims it asserts or presupposes, retrieves verified claims of both verdicts from an archive built from the training split using every view of the input, reranks them, and lets a verdict-aware verifier decide. \air{} fine-tunes the dense retriever on transformed training claims only.}
+\label{fig:system}
+\end{figure*}
+
+\subsection{Verified-claim archive}
+
+For each benchmark, the archive holds every training claim, true and false, with its verdict and the evidence that comes with it in the benchmark (PUBHEALTH explanations and fact-check articles, CLIMATE-FEVER evidence sentences, Fin-Fact justifications), split into passages of at most 120 words that inherit the claim's verdict. Storing both verdicts lets the verifier see when the closest verified claim is true rather than false. Development and test claims are never stored in the archive.
+
+\subsection{Canonicalisation}
+
+An LLM is instructed to ignore any instruction and format in the input and to write up to three short, self-contained English sentences stating the factual claims the text asserts or takes for granted, the most central first. The instruction makes two cases explicit: a question presupposes its claim (``Why did X happen?'' presupposes that X happened), and in a multiple-choice question the claim is the option the question is built around, not a distractor. The canonicaliser is told not to judge truth, so that it does not silently drop claims it believes to be false.
+
+\subsection{Multi-view hybrid retrieval}
+
+We encode the raw input and each canonical claim with BGE-M3 \citep{chen2024m3}, a multilingual encoder with dense and sparse lexical representations (inputs of up to 2,048 tokens, archive passages of up to 512). A passage's relevance to a view is its dense cosine similarity plus 0.3 times its sparse lexical score, a claim's relevance is the maximum over its passages, and the rankings of all views are combined with reciprocal rank fusion \citep{cormack2009rrf}. Keeping the raw view means that a canonicalisation error does not by itself cause a retrieval failure; the canonical views let a translated or serialised input retrieve claims written in plain English.
+
+\subsection{Reranking and verdict-aware verification}
+
+The cross-encoder bge-reranker-v2-m3 rescores the top 20 fused candidates against each canonical claim, keeping the best score per candidate, and the top five go to the verifier. The verifier, built on the same LLM as the canonicaliser, sees the canonical claims and, for each retrieved record, the verified claim, its verdict and its most relevant evidence passage, and is asked whether the text spreads false information: the same claim as a record verified false means yes, the same claim as a record verified true means no, and otherwise the evidence decides. The probability of ``Yes'' is the detector's score, and the threshold is set on the clean development set.
+
+\subsection{Training the verifier on clean claims}
+
+Used off the shelf, the LLM verifier costs 7.0 to 10.8 macro-F1 points under attack (Section~\ref{sec:ablation}), so we fine-tune it with LoRA \citep{hu2022lora} on the clean training claims of all three benchmarks, one adapter for all datasets. Each training example is built exactly as at test time, with the target ``Yes'' for false and ``No'' for true claims. Because training claims are themselves in the archive while test claims never are, retrieval for a training claim excludes its own record, so the verifier learns to decide from related verified claims and their evidence rather than from an exact copy. No attacked or transformed text is used, and the number of epochs (one or two) is chosen by clean development macro-F1.
+
+\subsection{Using transformed training claims (Setting B)}
+
+When transformed training claims are available (Setting~B), we use them for both retrieval and verification. They are sampled from Llama-3.1-8B-Instruct \citep{grattafiori2024llama3} with instructions and wrappers that differ from the test attacks, and only for the \emph{seen} families: French and Spanish translation, summarisation and multiple-choice questions; XML, JSON, Arabic, Hindi and Chinese translation and all chains are held out. \air{} fine-tunes the dense encoder of BGE-M3 contrastively \citep{henderson2017efficient,reimers2019sbert} so that a transformed training claim lies close to its own archive record, the verifier is trained on the transformed claims in addition to the clean ones, and the adversarially trained baselines receive exactly the same transformed claims (details in Appendix~\ref{sec:appendix_impl}).
+
+\section{Experimental Setup}
+
+\subsection{Datasets and protocol}
+
+We use the binary true/false subsets of three public benchmarks (Table~\ref{tab:data} in the appendix). PUBHEALTH \citep{kotonya2020pubhealth} has official train/dev/test splits; we drop the \emph{mixture} and \emph{unproven} labels. CLIMATE-FEVER \citep{diggelmann2020climatefever} has no official split; we keep \textsc{supports} and \textsc{refutes} claims and draw a stratified 60/10/30 split with a fixed seed. The test labels of Fin-Fact's \citep{rangapur2023finfact} shared task are not public, so we draw a stratified 70/10/20 split. Duplicate claims are removed. The test sets contain 985, 272 and 551 claims, each appearing clean and under all fifteen attacks.
+
+\subsection{Baselines}
+
+We compare against published detectors, run with their official code where it is available (details in Appendix~\ref{sec:appendix_impl}): the evidence-based SciBERT classifier of \citet{kotonya2020pubhealth}, the best model reported for PUBHEALTH, with evidence sentences ranked over the training archive; ARG \citep{hu2024arg}, which combines a fine-tuned BERT \citep{devlin2019bert} with LLM rationales, here generated by Llama-3.1-8B-Instruct; ProgramFC \citep{pan2023programfc}, which executes LLM-written reasoning programs with FLAN-T5-XL \citep{chung2024flan} over BM25 evidence \citep{robertson2009bm25}; MiniCheck \citep{tang2024minicheck}, which checks the input against the evidence of the three best-matching archived claims; a claim-retrieval baseline following \citet{pikuliak2023multiclaim}, in which Llama-3.1-8B-Instruct decides from the five archived claims closest under multilingual-E5-large \citep{wang2024me5}; zero-shot Llama-3.1-8B-Instruct and Qwen2.5-7B-Instruct, as in the evaluations of \citet{rangapur2023finfact} and \citet{chen2024llmmisinfo}, and Claude Opus~5.5 on a stratified subsample of 100 test claims per dataset; and an XLM-R classifier \citep{conneau2020xlmr}, since a multilingual encoder is a natural defence against translation. All retrieval-based baselines use the same training-split archive as \method{}. In Setting~B, SciBERT with evidence, ARG and XLM-R are also trained on the transformed claims (adversarial training). We further place \method{}'s canonicaliser in front of five baselines. Every trained model is run with three seeds, except the Setting~B variant of \method{} and the ablations, which use one.
+
+\subsection{Metrics and implementation}
+
+We report macro-F1 over the true and false classes on the clean test claims and averaged over the fifteen attacks. Two detectors are compared with a paired bootstrap over test claims with 1,000 resamples \citep{efron1993bootstrap}, which draws the same claims, with all their attacked versions, for both detectors and, for seeded models, also a seed; we report the two-sided $p$-value $\min(1, 2\min(P^*(d\le 0), P^*(d\ge 0)))$ of the difference $d$ and call $p<0.05$ significant. Thresholds maximise macro-F1 on the clean development claims, and all detectors decode greedily (Appendices~\ref{sec:appendix_impl} and~\ref{sec:appendix_prompts} give implementation details and prompts).
+
+\section{Results}
+\label{sec:results}
+
+\input{tables/main.tex}
+\input{tables/ablation.tex}
+
+\subsection{Published detectors break under format shifts}
+
+Table~\ref{tab:main} shows that detectors without attacked training data lose much of their accuracy once a claim's format shifts. Averaged over the eight Setting~A baselines and three datasets, macro-F1 falls by 19.6 points, and by 28.7 points for the eleven detector--dataset pairs whose clean macro-F1 is at least 70. The fine-tuned classifiers are the most fragile: on PUBHEALTH, SciBERT with evidence, ARG and XLM-R fall from 79.2--79.9 to 30.6--36.5. ProgramFC and MiniCheck lose 7.9 to 21.5 points from lower clean scores (49.7 to 67.7). Qwen2.5-7B gains under attack on CLIMATE-FEVER and Fin-Fact, but from near-chance clean scores (42.2 and 44.2). Claim retrieval with an LLM is the most robust baseline and still loses 7.5 to 23.9 points. Without learning any parameters from the benchmarks, \method{} with an off-the-shelf verifier has the highest attacked macro-F1 among the training-free detectors on every dataset (66.3, 64.1 and 67.7, against 60.3, 48.8 and 67.6 for claim retrieval), significantly so in 14 of 15 comparisons ($p<0.001$; tied with claim retrieval on Fin-Fact, $p=0.91$), although on clean claims it is significantly below claim retrieval on PUBHEALTH and Fin-Fact and below zero-shot Llama on PUBHEALTH.
+
+\method{} has the highest clean macro-F1 on all three datasets (82.0, 77.0 and 79.5) and loses only 5.2, 5.6 and 4.4 points under attack. Under attack it is significantly better than every Setting~A baseline on every dataset ($p<0.001$), by 7.5 to 46.1 points. On clean claims, its advantage over the fine-tuned classifiers on PUBHEALTH is not significant, so the robustness does not come at a cost in clean accuracy.
+
+\subsection{Adversarial training closes part of the gap}
+
+Training on transformed claims helps every classifier (Table~\ref{tab:main}, Setting~B): on PUBHEALTH, attacked macro-F1 rises from 33.0 to 52.3 for SciBERT with evidence, from 30.6 to 54.4 for ARG and from 36.5 to 71.3 for XLM-R. SciBERT and ARG still lose 12.2 to 27.1 points, and \method{}, even without transformed training data, beats both by 10.0 to 24.5 points under attack on every dataset ($p<0.001$). Adversarially trained XLM-R is the strongest baseline and loses at most 8.1 points. Given the same transformed claims, \method{} significantly outperforms it under attack on PUBHEALTH (+5.4, $p<0.001$) and Fin-Fact (+4.5, $p<0.001$), and the two are tied on CLIMATE-FEVER ($-2.9$, $p=0.24$); without transformed data, \method{} is better on PUBHEALTH (+5.4, $p<0.001$) and tied on the other two ($-0.9$ and +1.7, $p\ge0.33$). Across both settings, \method{} is significantly more robust in 32 of the 33 same-setting comparisons, the exception being adversarially trained XLM-R on CLIMATE-FEVER. At the same seed, the transformed claims help \method{} significantly only on Fin-Fact (+3.3 points under attack, $p=0.01$) and lower its clean macro-F1 on PUBHEALTH by 3.0 points ($p=0.02$).
+
+\subsection{A large proprietary LLM}
+
+A much larger model does not remove the problem. Claude Opus~5.5, run zero-shot with the same prompt as the other LLMs on a stratified subsample of 100 test claims per dataset (Table~\ref{tab:claude} in Appendix~\ref{sec:appendix_results}, with other detectors on the same claims), is strong on clean PUBHEALTH and CLIMATE-FEVER claims (85.8 and 70.5 macro-F1) but loses 16.9 and 15.4 points under attack: it detects 74\% and 79\% of the false claims in their clean form and only 42\% and 27\% of the attacked ones. On Fin-Fact it flags few claims (22\% of the clean false claims; clean macro-F1 49.5), so its higher attacked score reflects a shift in how often it says yes rather than robustness. Claude is far more robust than Llama-3.1-8B zero-shot (by 11.4 to 21.0 points, $p<0.001$), but \method{} beats it under attack on CLIMATE-FEVER (+13.5, $p=0.006$) and Fin-Fact (+13.4, $p=0.004$); on PUBHEALTH the difference (+7.8) is not significant on 100 claims ($p=0.13$). Claude's clean CLIMATE-FEVER score may also be inflated by contamination (Appendix~\ref{sec:contamination}).
+
+\section{Analysis}
+\label{sec:analysis}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_per_attack.pdf}
+\caption{Macro-F1 per attack, averaged over the three datasets, grouped into the attack families seen in Setting~B training, unseen single attacks and unseen chained attacks. Solid lines: all detectors trained on the same transformed claims (Setting~B; \method{} with one seed, the others averaged over three). Dashed line: \method{} trained on clean claims only (Setting~A). Adversarial training of SciBERT with evidence and ARG helps on the seen families and on XML/JSON, which leave the claim's words intact, but not on unseen languages or chains; \method{} is almost equally robust with and without transformed training claims. Per-dataset numbers are in Table~\ref{tab:seen_unseen} and Tables~\ref{tab:per_pubhealth}--\ref{tab:per_finfact} in the appendix.}
+\label{fig:per_attack}
+\end{figure*}
+
+\subsection{Seen and unseen attack families}
+
+Setting~B trains on four attack families only: French and Spanish translation, summarisation and multiple-choice questions. Figure~\ref{fig:per_attack} and Table~\ref{tab:seen_unseen} in the appendix separate the test attacks into these seen families, unseen single attacks and the six chains. Adversarial training of SciBERT with evidence and of ARG fails to transfer: on PUBHEALTH they reach 69.6 and 70.5 on seen families but 42.1 and 44.2 on unseen single attacks, and the pattern holds on the other datasets. Trained on the same transformed claims, \method{} beats both by 12.7 to 34.2 points on unseen single attacks and by 9.2 to 28.1 points on chains on every dataset ($p\le0.004$), but by only 0.5 to 7.7 points on the seen families (not significantly on CLIMATE-FEVER). Adversarially trained XLM-R barely varies across groups, plausibly because multilingual pretraining aligns unseen languages with seen ones and XML and JSON keep the claim's words; \method{} is equally flat and better than it in every group on PUBHEALTH and Fin-Fact (+4.1 to +6.5 points, $p\le0.004$), with no significant difference on CLIMATE-FEVER. \method{} trained on clean claims only follows almost the same curve (dashed), so its robustness to unseen attacks does not depend on seeing transformed claims.
+
+\subsection{Ablations}
+\label{sec:ablation}
+
+Table~\ref{tab:ablation} changes one component at a time, at the first seed. Canonicalisation is the only retrieval-side component with a significant effect under attack: without it, attacked macro-F1 falls by 9.1 points on CLIMATE-FEVER and 4.6 on Fin-Fact ($p<0.001$) and is unchanged on PUBHEALTH, whereas clean macro-F1 rises by 2.7 to 7.1 points (significantly on PUBHEALTH and CLIMATE-FEVER), presumably because rewriting a claim that is already plain can only lose information. A generic claim-normalisation prompt changes no result significantly, so the benefit comes from verifying a normalised claim rather than from our particular instruction. Replacing canonicalisation with the \air{} encoder recovers part of the loss on CLIMATE-FEVER and Fin-Fact and helps slightly on PUBHEALTH (+1.4 points, $p=0.012$). Removing sparse retrieval or the reranker, replacing BGE-M3 by mE5, or adding the \air{} encoder to canonicalisation changes attacked macro-F1 by at most 2.1 points, never significantly. Verifier training matters most: without it, macro-F1 is 6.1 to 12.0 points lower on clean claims and 7.0 to 10.8 points lower under attack ($p<0.001$).
+
+\subsection{Further analyses}
+
+Appendix~\ref{sec:appendix_analyses} reports three further analyses. In front of untrained or zero-shot detectors, \method{}'s canonicaliser significantly raises attacked macro-F1 in 13 of 15 detector--dataset pairs but costs clean accuracy. Of two adaptive attacks on the canonicaliser, an injected instruction to report a decoy claim costs \method{} 2.9 to 5.1 points, whereas three true decoy claims around the content cost 8.8 to 14.0 points, the clearest weakness we found. A guided-instruction contamination test \citep{golchin2024timetravel} finds no memorisation of the test claims by Llama-3.1-8B, the model behind our canonicaliser and verifier, and clear contamination for Claude Opus~5.5 only on CLIMATE-FEVER, where it completes 21 of 97 test claims verbatim.
+
+\section{Conclusion}
+
+Format-shifting attacks change nothing about a false claim except the way it is presented, yet they reduce many published misinformation detectors and zero-shot LLMs to near or below chance level on three benchmarks. Adversarial training on transformed claims repairs the attack families it covers but, for most detectors, not new languages, formats or chains. \method{} instead verifies the claim: it keeps its clean accuracy, loses about five points under fifteen attacks and, compared under the same training conditions, is significantly more robust than every baseline in 32 of 33 comparisons. Its clearest weakness is an adaptive attacker who surrounds the claim with decoys, which future work could address by verifying every claim a text asserts rather than the most central few.
+
+\section*{Limitations}
+
+\method{} relies on an archive of verified claims, so it can only help with claims that are related to previously fact-checked ones; truly novel claims fall back on the evidence the verifier receives. The benchmark claims are in English, so the translation attacks go from English to other languages and are read back by an English-centric pipeline; claims originally written in other languages may behave differently. Two of our three splits are our own, because CLIMATE-FEVER has no official split and Fin-Fact's test labels are not public, so our numbers are not directly comparable with papers that use other splits. All test attacks come from one attacker model and preservation was judged by one judge model; although both belong to families different from our detector, other attackers may produce harder transformations. We study binary true/false labels and drop mixed or unproven verdicts. For cost reasons, Claude Opus~5.5 was evaluated on 100 claims per dataset only, which leaves some of its comparisons without significance, and its contamination check suggests that its clean score on CLIMATE-FEVER is optimistic. Our contamination check extracts a guess from answers that begin with a hedge, and this extraction is heuristic. Finally, our adaptive attacks are two simple strategies; attackers with more knowledge or query access could design stronger ones, and the Setting~B variant of \method{} and the ablations were run with a single seed.
+
+\section*{Ethics Statement}
+
+The attacks we study use only routine LLM operations such as translation, summarisation and formatting, which are already available to anyone, and we describe them so that detectors can be evaluated and hardened against them. We release attacked versions of public benchmarks only, generated from claims that have already been publicly fact-checked, together with their original verdicts, so the release does not add new misinformation to circulation. Automated detectors make errors that fall unevenly on different topics and communities; we see them as tools that prioritise content for human fact-checkers rather than as replacements for them. The decoy attack in Section~\ref{sec:analysis} shows a weakness of our own method, which we report so that deployments can account for it.
+
+\bibliography{references}
+
+\appendix
+\section{Data, attack examples and preservation}
+\label{sec:appendix_attacks}
+
+\input{tables/data.tex}
+
+Table~\ref{tab:data} gives the size of each split. Tables~\ref{tab:example_single} and~\ref{tab:example_chain} show one false PUBHEALTH test claim under every attack, exactly as given to the detectors. Table~\ref{tab:preservation} gives the share of attacked texts that the judge found to preserve the claim; its prompt is in Appendix~\ref{sec:appendix_prompts}.
+
+\input{tables/example.tex}
+\input{tables/preservation.tex}
+
+\section{Further analyses}
+\label{sec:appendix_analyses}
+
+\subsection{Canonicalisation as a plug-in defence}
+
+Placing \method{}'s canonicaliser in front of an existing detector significantly raises its attacked macro-F1 in 13 of 15 detector--dataset pairs for detectors trained on clean claims or used zero-shot, by up to 18.7 points (XLM-R on PUBHEALTH), and lowers it once (claim retrieval on Fin-Fact, $-5.4$ points; Table~\ref{tab:plugin}). The gain is paid for on clean claims: zero-shot Llama loses 7.9 to 12.2 points of clean macro-F1, and XLM-R loses 19.0 points on PUBHEALTH, presumably because these detectors were developed or trained on claims as published rather than on their canonical rewrites. For adversarially trained XLM-R, which is already robust, the canonicaliser hurts under attack ($-1.9$ points on PUBHEALTH and $-7.9$ on CLIMATE-FEVER). Canonicalisation is therefore most useful together with a verifier that is trained on canonical claims, as in \method{}.
+
+\subsection{Adaptive attacks}
+
+We evaluate two adaptive attacks by an attacker who knows our pipeline. The \emph{injection} attack inserts, before and after the content, a note addressed to automated claim-extraction systems, stating that the text's only claim is a decoy, namely a true claim from the training split. The \emph{decoy} attack surrounds the content with three true training claims to push the real claim out of the canonicaliser's output. Both are applied on top of the MCQ$\rightarrow$JSON and summarisation attacks.
+
+An attacker who knows that \method{} canonicalises its input can target that step (Table~\ref{tab:adaptive}). An injected note that tells claim extractors to report a decoy claim lowers \method{}'s macro-F1 by 2.9 to 5.1 points relative to the same attacks without it, a loss similar to that of adversarially trained XLM-R (4.9 to 6.9 points), which has no extraction step. Surrounding the content with three true decoy claims is more effective and lowers \method{} by 8.8 to 14.0 points, more than XLM-R on PUBHEALTH and Fin-Fact; the Setting~B variant of \method{} is affected more than the Setting~A variant on all three datasets, by 11.7 to 17.8 points. Decoys plausibly exploit the canonicaliser's limit of three claims and its ordering by centrality, and they are the clearest weakness we found. We note that decoy texts also preserve the original claim less often according to the judge, as low as 48.5\% for MCQ$\rightarrow$JSON on CLIMATE-FEVER, so the attacker pays for the attack with a less effective message.
+
+\subsection{Test-set contamination}
+\label{sec:contamination}
+
+LLM-based detectors may have seen the benchmark claims, and their verdicts, during pretraining. We test Llama-3.1-8B-Instruct, the canonicaliser and verifier of \method{}, and Claude Opus~5.5 with the guided instruction method of \citet{golchin2024timetravel}: given the first part of a test claim, the model completes it once with an instruction that names the dataset and split (guided) and once without (general), and contamination is indicated when the guided completions are significantly closer to the true claim. In the original instruction format, Llama refused 95 to 100\% of the guided prompts, so we pre-fill the answer with the first part of the claim, which reduces refusals to at most 1.2\%. Table~\ref{tab:contamination} shows that the completions are far from the true claims (ROUGE-L of 0.08 to 0.13) and only one of 280 claims is reproduced exactly. Naming the dataset raises ROUGE-L slightly but significantly on PUBHEALTH and CLIMATE-FEVER, by 0.037 and 0.038, which may reflect topic priming as well as exposure, and not on Fin-Fact. Some guided prompts produced no completion; restricting the test to claims with two non-empty completions gives the same conclusions. Since the same model also serves as the zero-shot baseline, which is not robust, exposure to the claims does not explain the results.
+
+For Claude Opus~5.5 the picture depends on the dataset. Claude usually prefaces its guided answer with a statement that it cannot recall the exact wording (52 to 79\% of guided answers) and then gives a guess, which we extract and score. On CLIMATE-FEVER, its guided completions reproduce the second piece of 21 of 97 claims exactly, 13 of them with eight or more words, against a single exact completion with the general instruction; a verbatim continuation of that length is very unlikely to be guessed, so we conclude that Claude has seen many CLIMATE-FEVER claims, or the widely republished sources they were taken from. On PUBHEALTH and Fin-Fact, naming the dataset hardly changes exact reproduction (5 vs.\ 2 and 5 vs.\ 5 exact completions, mostly short and predictable endings), and the one long Fin-Fact match is a well-known quotation that Claude also completes without the dataset name; guided ROUGE-L is significantly higher on both datasets ($p<0.001$), but, as for Llama, this gain may reflect topic priming. We therefore find clear evidence of contamination only for CLIMATE-FEVER, where Claude's clean score may overstate what it would achieve on unseen claims. This makes its loss under attack there more telling: claims the model has probably seen are still missed once their format is shifted.
+
+\section{Additional results}
+\label{sec:appendix_results}
+
+\input{tables/claude.tex}
+\input{tables/seen_unseen.tex}
+\input{tables/plugin.tex}
+\input{tables/adaptive.tex}
+\input{tables/contamination.tex}
+\input{tables/per_attack_pubhealth.tex}
+\input{tables/per_attack_climatefever.tex}
+\input{tables/per_attack_finfact.tex}
+
+\section{Implementation details}
+\label{sec:appendix_impl}
+
+Open LLMs run with vLLM \citep{kwon2023vllm}, each job on a single NVIDIA GPU with 80\,GB or more of memory. Detectors, the canonicaliser, the judge, ARG's rationale generator and ProgramFC decode greedily; the test attacks are sampled with temperature 0.3 and top-$p$ 0.95 (seed 13) and the transformed training claims with temperature 0.7 and top-$p$ 0.95 (seed 1). Claude Opus~5.5 is called through the Anthropic Message Batches API with its default sampling and low reasoning effort, at most 2,048 output tokens; an answer that is neither yes nor no counts as not flagged. Archive evidence is split into passages of at most 120 words. Retrieval scores a passage by its dense cosine similarity plus 0.3 times the sparse lexical score; each view contributes its 50 best claims to reciprocal rank fusion ($k=60$), and the 30 best fused claims are kept. The cross-encoder rescores the top 20 (maximum length 512 tokens) and the top five go to the verifier, each with its best evidence passage cut to 80 words. The canonicaliser generates at most 200 tokens and at most three claims are kept.
+
+The verifier adapter uses LoRA with rank 16, $\alpha=32$ and dropout 0.05 on all attention and MLP projections of Llama-3.1-8B-Instruct, trained with AdamW (learning rate $10^{-4}$, linear schedule with 5\% warm-up, effective batch size 16) on prompts of at most 3,072 tokens; the number of epochs (1 or 2) is chosen by clean development macro-F1. \air{} fine-tunes the BGE-M3 dense encoder with a cached multiple-negatives ranking loss for one epoch (batch size 64, learning rate $10^{-5}$, 10\% warm-up).
+
+In Setting~B, transformed versions exist for every training claim of CLIMATE-FEVER and Fin-Fact and for a random 4,000 of the 8,077 PUBHEALTH training claims. \air{} is trained with a contrastive loss with in-batch negatives plus, for each pair, one hard negative drawn from the five training claims closest to the positive under the original encoder; untransformed claims are kept as anchors so that clean behaviour is preserved, a single encoder is trained on the union of the three training splits, and the sparse lexical weights remain those of the original BGE-M3.
+
+The evidence classifier of \citet{kotonya2020pubhealth} ranks evidence sentences with Sentence-BERT \citep{reimers2019sbert}, keeps the top five and fine-tunes SciBERT \citep{beltagy2019scibert} on the claim and its evidence; because a test claim's own fact-check article is not in our archive, sentences are ranked over the whole archive, and a training claim never sees its own article. ARG uses the official model and training code and the paper's rationale prompt template, with Llama-3.1-8B-Instruct in place of GPT-3.5-turbo. ProgramFC uses the official prompts and execution logic, with Llama-3.1-8B-Instruct as program generator. MiniCheck (Bespoke-MiniCheck-7B) is run exactly as in its official implementation.
+
+XLM-R-large is fine-tuned with a class-weighted cross-entropy loss for up to five epochs (learning rate $10^{-5}$, batch size 16, 10\% warm-up, weight decay 0.01), keeping the epoch with the best development macro-F1. For SciBERT with evidence we follow \citet{kotonya2020pubhealth} and grid-search batch size $\{8,16,32\}$, learning rate $\{10^{-5}, 5\cdot10^{-6}, 10^{-6}\}$ and epochs $\{2,3,4\}$ on each development set. ARG uses the hyper-parameters of its official English configuration (BERT-base, learning rate $5\cdot10^{-5}$, batch size 64, maximum length 170, up to 50 epochs with early stopping). Every trained model is run with three seeds unless stated otherwise, and every decision threshold is set on the clean development set.
+
+\section{Prompts}
+\label{sec:appendix_prompts}
+
+All prompts are reproduced from our code; \texttt{\textless{}x\textgreater{}} marks where the input is inserted.
+
+\input{tables/prompts.tex}
+
+\end{document}

@@ -1,0 +1,1 @@
+{"threshold": 0.4292792904376984, "args": {"dataset": "pubhealth", "model": "FacebookAI/xlm-roberta-large", "tag": "xlmr-advtrain", "epochs": 5, "lr": 1e-05, "seed": 14, "aug": true}}

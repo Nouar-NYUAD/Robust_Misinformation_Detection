@@ -12,7 +12,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from common import ROOT, DATASETS
+from common import ROOT, DATASETS, display
 from seen_unseen import SEEN, UNSEEN_SINGLE, UNSEEN_CHAIN
 
 OUT = ROOT / "paper/figures"
@@ -44,7 +44,7 @@ def style(ax):
 
 
 def dumbbell():
-    fig, axes = plt.subplots(1, 3, figsize=(6.3, 3.0), sharey=True)
+    fig, axes = plt.subplots(1, 3, figsize=(6.3, 2.6), sharey=True)
     y = {}
     pos = 0
     for i, (m, _, st) in enumerate(ROWS):
@@ -101,7 +101,7 @@ def per_attack():
               ("ours_vtrained", "UNWRAP, no attacks (A)", BLUE, "", (0, (3, 2)))]
     groups = [("Clean", ["CLEAN"]), ("Seen in Setting B", SEEN), ("Unseen single", UNSEEN_SINGLE),
               ("Chained (unseen)", UNSEEN_CHAIN)]
-    short = lambda a: {"CLEAN": "clean"}.get(a, a.replace("TR_", "").replace(">", "→"))
+    short = lambda a: {"CLEAN": "clean"}.get(a, display(a).replace("TR_", "").replace(">", "→"))
     xs, labels, spans, x = {}, [], [], 0
     for gname, atts in groups:
         start = x
@@ -109,7 +109,7 @@ def per_attack():
             xs[a] = x; labels.append(short(a)); x += 1
         spans.append((gname, start, x - 1))
         x += 0.6
-    fig, ax = plt.subplots(figsize=(6.3, 2.35))
+    fig, ax = plt.subplots(figsize=(6.3, 2.1))
     style(ax)
     ax.grid(axis="x", visible=False); ax.grid(axis="y", color=GRID, lw=0.5)
     for k, (g, s0, s1) in enumerate(spans):

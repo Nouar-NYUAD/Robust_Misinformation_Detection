@@ -1,0 +1,1 @@
+{"threshold": 1.319407805895021e-06, "args": {"dataset": "pubhealth", "method": "zs", "llm": "Qwen/Qwen2.5-7B-Instruct", "encoder": null, "k": 5, "no_canon": false, "canon_kind": "ours", "canon_input": null, "no_sparse": false, "no_rerank": false, "tag": "qwen", "limit": 0, "verifier_lora": null}}

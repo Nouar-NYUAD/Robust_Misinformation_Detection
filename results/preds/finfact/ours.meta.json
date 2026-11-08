@@ -1,0 +1,1 @@
+{"threshold": 0.24508635644129742, "args": {"dataset": "finfact", "method": "ours", "llm": "meta-llama/Meta-Llama-3.1-8B-Instruct", "encoder": null, "k": 5, "no_canon": false, "canon_kind": "ours", "canon_input": null, "no_sparse": false, "no_rerank": false, "tag": "", "limit": 0}}

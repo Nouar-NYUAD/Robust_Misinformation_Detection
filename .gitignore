@@ -1,6 +1,8 @@
-# Overleaf clone (separate git repository) and paper build output
+# Overleaf clone (a separate git repository that mirrors paper/)
 overleaf/
-paper/
+
+# over GitHub's 100 MB file limit; regenerate with: python code/train_verifier.py --stage data --aug
+data/verifier/train_aug.jsonl
 
 # Python
 __pycache__/

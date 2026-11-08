@@ -1,0 +1,31 @@
+\begin{table*}[t]\centering\small\setlength{\tabcolsep}{5pt}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lccccccccc}
+\toprule
+ & \multicolumn{3}{c}{PUBHEALTH} & \multicolumn{3}{c}{CLIMATE-FEVER} & \multicolumn{3}{c}{Fin-Fact} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+Detector & Clean & Att. & $\Delta$ & Clean & Att. & $\Delta$ & Clean & Att. & $\Delta$ \\
+\midrule
+\multicolumn{10}{l}{\emph{Setting A: no attacked or transformed text in training}} \\
+\multicolumn{10}{l}{\quad\textit{Training-free}} \\
+\quad ProgramFC \citep{pan2023programfc} & 54.8$^{\dagger}$ & 43.9$^{\dagger}$ & $-10.9$ & 54.7$^{\dagger}$ & 41.3$^{\dagger}$ & $-13.5$ & 52.7$^{\dagger}$ & 44.8$^{\dagger}$ & $-7.9$ \\
+\quad MiniCheck \citep{tang2024minicheck} & 57.0$^{\dagger}$ & 43.2$^{\dagger}$ & $-13.8$ & 67.7$^{\dagger}$ & 46.2$^{\dagger}$ & $-21.5$ & 49.7$^{\dagger}$ & 37.1$^{\dagger}$ & $-12.6$ \\
+\quad Claim retrieval + LLM \citep{pikuliak2023multiclaim} & 77.7$^{\dagger}$ & 60.3$^{\dagger}$ & $-17.4$ & 72.7 & 48.8$^{\dagger}$ & $-23.9$ & 75.1$^{\dagger}$ & 67.6$^{\dagger}$ & $-7.5$ \\
+\quad Llama-3.1-8B zero-shot & 77.6$^{\dagger}$ & 47.5$^{\dagger}$ & $-30.1$ & 73.5 & 43.1$^{\dagger}$ & $-30.4$ & 58.1$^{\dagger}$ & 39.5$^{\dagger}$ & $-18.7$ \\
+\quad Qwen2.5-7B zero-shot & 60.6$^{\dagger}$ & 49.0$^{\dagger}$ & $-11.6$ & 42.2$^{\dagger}$ & 48.7$^{\dagger}$ & $+6.5$ & 44.2$^{\dagger}$ & 47.2$^{\dagger}$ & $+2.9$ \\
+\quad \method{}, no training (ours) & 70.9$^{\dagger}$ & 66.3$^{\dagger}$ & $-4.7$ & 69.4$^{\dagger}$ & 64.1$^{\dagger}$ & $-5.4$ & 66.5$^{\dagger}$ & 67.7$^{\dagger}$ & $+1.1$ \\
+\multicolumn{10}{l}{\quad\textit{Fine-tuned on clean claims}} \\
+\quad SciBERT + evidence \citep{kotonya2020pubhealth} & 79.2 & 33.0$^{\dagger}$ & $-46.2$ & 69.1 & 44.3$^{\dagger}$ & $-24.8$ & 72.8$^{\dagger}$ & 51.0$^{\dagger}$ & $-21.8$ \\
+\quad ARG \citep{hu2024arg} & 79.8 & 30.6$^{\dagger}$ & $-49.2$ & 49.3$^{\dagger}$ & 28.8$^{\dagger}$ & $-20.5$ & 72.8$^{\dagger}$ & 45.4$^{\dagger}$ & $-27.4$ \\
+\quad XLM-R & 79.9 & 36.5$^{\dagger}$ & $-43.4$ & 53.5$^{\dagger}$ & 44.2$^{\dagger}$ & $-9.3$ & 71.4$^{\dagger}$ & 52.8$^{\dagger}$ & $-18.6$ \\
+\quad \method{} (ours) & \textbf{82.0} & \textbf{76.7} & $-5.2$ & \textbf{77.0} & \textbf{71.4} & $-5.6$ & \textbf{79.5} & \textbf{75.2} & $-4.4$ \\
+\midrule
+\multicolumn{10}{l}{\emph{Setting B: also trained on transformed claims of the seen attack families}} \\
+SciBERT + evidence, adv.\ training & 79.4 & 52.3$^{\dagger}$ & $-27.1$ & 73.6 & 56.0$^{\dagger}$ & $-17.7$ & 76.8 & 62.4$^{\dagger}$ & $-14.3$ \\
+ARG, adv.\ training & \textbf{79.7} & 54.4$^{\dagger}$ & $-25.4$ & 73.6 & 61.4$^{\dagger}$ & $-12.2$ & 75.6$^{\dagger}$ & 61.8$^{\dagger}$ & $-13.7$ \\
+XLM-R, adv.\ training & 79.4 & 71.3$^{\dagger}$ & $-8.1$ & 72.0 & \textbf{72.3} & $+0.4$ & 76.4 & 73.5$^{\dagger}$ & $-2.9$ \\
+\method{} + \air{} + aug.\ (ours) & 79.4 & \textbf{76.8} & $-2.6$ & \textbf{77.1} & 69.4 & $-7.7$ & \textbf{80.6} & \textbf{78.0} & $-2.6$ \\
+\bottomrule
+\end{tabular}\end{adjustbox}
+\caption{Macro-F1 (\%) on clean test claims (Clean), averaged over the fifteen format-shifting attacks (Att.), and the change from clean to attacked ($\Delta$). Attacked texts are those the judge found to preserve the claim. Setting~A: no attacked or transformed text in training, split into training-free detectors (no parameters learned from the benchmarks) and detectors fine-tuned on clean claims. Fine-tuned models are averaged over three seeds, except \method{} + \air{} + aug.\ (one seed). Best per setting in bold. $^{\dagger}$/$^{\ddagger}$: significantly worse/better than the fine-tuned \method{} of the same setting (paired bootstrap, $p<0.05$).}
+\label{tab:main}
+\end{table*}
